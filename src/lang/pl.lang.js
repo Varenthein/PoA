@@ -1,4 +1,4 @@
 export const polish = {
-  hi: 'Hello',
+  hi: 'Witaj',
   welcome: 'Welcome, {name}',
 }
