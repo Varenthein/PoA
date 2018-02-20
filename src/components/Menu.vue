@@ -2,14 +2,14 @@
   <div class="menu">
       <el-menu class="el-menu-demo" mode="horizontal" :default-active="activeLink">
        <template v-for="link in links">
-           <el-submenu v-if="link.subMenu && link.subMenu.length > 0" :index="link.pathTo">
+           <el-submenu v-if="(!link.perm || User.permissions[link.perm]) && link.subMenu && link.subMenu.length > 0" :index="link.pathTo">
                <template slot="title">{{ link.title }}</template>
-               <el-menu-item v-for="submenu in link.subMenu" :index="link.pathTo + '/' + submenu.pathTo">
-                 <router-link :to="submenu.pathTo">{{ submenu.title }}</router-link>
-               </el-menu-item>
+                 <el-menu-item v-if="!submenu.perm || User.permissions[submenu.perm]" v-for="submenu in link.subMenu" :index="link.pathTo + '/' + submenu.pathTo">
+                   <router-link :to="submenu.pathTo">{{ submenu.title }}</router-link>
+                 </el-menu-item>
            </el-submenu>
-           <el-menu-item v-else :index="link.pathTo">
-                <router-link :to="link.pathTo">{{ link.title }}</router-link>
+           <el-menu-item v-else-if="(!link.perm || User.permissions[link.perm]) && !link.subMenu" :index="link.pathTo">
+                <router-link :to="link.pathTo">{{ link.title }}    </router-link>
            </el-menu-item>
        </template>
        <el-menu-item index="logout">
@@ -21,17 +21,45 @@
 
 <script>
 
+import { userService } from '@/services/user.service.js'
+
 export default {
   name: 'Menu',
   data () {
     return {
+       User: { permissions: {}},
        activeLink:  'Home'
     }
   },
+  methods: {
+
+        /***************************** LOAD USER **************************/
+
+        loadUser: function() {
+          userService.getLoggedUser().then(response => {
+            this.User = response.data;
+            this.User.permissions = JSON.parse(this.User.permissions);
+            Object.keys(this.User.permissions).map((key, index) => {
+                console.log(key, this.User.permissions[key], this.User.permissions[key])
+                this.User.permissions[key] = (this.User.permissions[key] == "true") ? true : false;
+            });
+            console.log(this.User.permissions);
+          }).catch(err => {
+            this.$notify({title: this.translate('accessDenied'), message: this.translate('accessDeniedMsg'), type: 'error'})
+            setTimeout(() => { window.location = "" }, 3000);
+          });
+        }
+
+  },
   created: function () {
+
+    //load user
+    this.loadUser();
+
+    //load menu structure
     this.links = [
       { title: this.translate('homepage'), pathTo: 'home', subMenu: false },
-      { title: this.translate('products'), pathTo: 'products', subMenu: [
+      { title: this.translate('products'), perm: 'seeProduct', pathTo: 'products', subMenu: [
         { title: this.translate('allProducts'), pathTo: 'ProductsAll', subMenu: false },
         { title: this.translate('addProduct'), pathTo: 'ProductAdd', subMenu: false },
         { title: this.translate('categories'), pathTo: 'Categories', subMenu: false }

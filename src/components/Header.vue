@@ -22,10 +22,10 @@ export default {
   },
   methods: {
     setLanguage: (lang) => {
-      console.log(lang);
-      this.language = lang;
-      console.log(this.language);
-      setTimeout(() => window.location = "#",500);
+      console.log(lang)
+      this.language = lang
+      console.log(this.language)
+      setTimeout(() => { window.location = '' }, 500)
     }
   }
 }

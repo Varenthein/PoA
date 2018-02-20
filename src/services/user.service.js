@@ -1,14 +1,6 @@
 import api from '@/config/api.config'
 
-export let $USER = false;
-
 export const userService = {
-
-  /********** SET USER INFO *************/
-
-  setUser: (user) => {
-    $USER = user
-  },
 
   /********** USER CAN *************/
 
