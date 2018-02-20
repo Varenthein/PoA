@@ -19,5 +19,9 @@ export const polish = {
   allPromotions: 'Wszystkie promocje',
   addPromotion: 'Dodaj promocję',
   sentNewsletter: 'Wysłane listy',
-  addNewsletter: 'Wyślij nowy'
+  addNewsletter: 'Wyślij nowy',
+  success: 'Sukces!',
+  accessDenied: 'Brak dostępu!',
+  successfullyLogged: 'Zostałeś pomyślnie zalogowany!',
+  accessDeniedMsg: 'Nie możesz tu przebywać! Za chwilę zostaniesz przekierowany na stronę logowania!'
 }

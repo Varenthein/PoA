@@ -8,7 +8,7 @@
 <script>
 
 export default {
-  name: 'footer',
+  name: 'page-footer',
   data () {
     return {
     }

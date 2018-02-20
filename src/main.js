@@ -12,8 +12,10 @@ import { english } from './lang/en.lang.js'
 import App from './App'
 
 Vue.config.productionTip = false
+let $USER = false;
 
 Vue.use(ElementUI)
+Vue.use($USER);
 Vue.use(MultiLanguage, {
     default: 'pl',
     pl: polish,

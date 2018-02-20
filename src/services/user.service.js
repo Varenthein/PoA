@@ -1,16 +1,32 @@
-import api from './api'
-var sha256 = require('js-sha256');
+import api from '@/config/api.config'
 
 export const userService = {
 
-  //Get info about logged user
-  getUserInfo: function(id) {
-    return api.post('/user/getLogged')
-  }
+  /********** GET USER BY ID ************/
 
-  //is logged?
-  isLogged: function(user) {
-    return api.post('/user/isLogged')
+  getUserById: (id) => {
+    return api.get('/user/id/'+id)
+  },
+
+  /********** GET LOGGED USER  ************/
+
+  getLoggedUser: () => {
+    return api.get('/user/getLogged')
+  },
+
+  /********** IS LOGGED ************/
+
+  isLogged: () => {
+
+    return new Promise(function(resolve, reject) {
+      api.get('/user/getLogged').then(response => {
+        if (response.data.login.length) resolve(true)
+        else reject(false)
+      }).catch(err => {
+        reject(false)
+      });
+
+    })
   }
 
 }

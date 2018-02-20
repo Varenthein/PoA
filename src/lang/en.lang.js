@@ -11,7 +11,6 @@ export const english = {
   addUser: 'Add user',
   userGroups: 'User groups',
   allUsers: 'All users',
-  promotions: 'Promotions',
   newsletter: 'Newsletter',
   opinions: 'Opinions',
   stats: 'Statistics',

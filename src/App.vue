@@ -18,7 +18,7 @@
 
         <!-- FOOTER -->
         <el-footer>
-            <Footer></Footer>
+            <page-footer></page-footer>
         </el-footer>
 
     </el-container>
@@ -31,9 +31,33 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import Menu from './components/Menu'
 
+import { userService } from './services/user.service.js'
+
 export default {
   name: 'App',
-  components: { PageHeader: Header, Menu: Menu, Footer: Footer }
+  methods: {
+
+    /*loadUser: function() {
+      userService.getLoggedUser().then(response => {
+        $USER = response.data
+        console.log("User".$USER)
+      }).catch(err => {
+        console.log(err);
+      });
+    }*/
+
+  },
+  created: function() {
+
+    //Verify if user is logged and load it when success
+    userService.isLogged().then(() => { this.$notify({title: this.translate('success'), message: this.translate('successfullyLogged'), type: 'success'}) })
+    .catch((err) => {
+      this.$notify({title: this.translate('accessDenied'), message: this.translate('accessDeniedMsg'), type: 'error'})
+      setTimeout(() => { window.location = "" }, 3000);
+    })
+
+  },
+  components: { PageHeader: Header, Menu: Menu, PageFooter: Footer }
 }
 </script>
 
