@@ -16,7 +16,6 @@ export const polish = {
   opinions: 'Opinie',
   stats: 'Statystyki',
   orders: 'Zamówienia',
-  promotions: 'Promocje',
   allPromotions: 'Wszystkie promocje',
   addPromotion: 'Dodaj promocję',
   sentNewsletter: 'Wysłane listy',
