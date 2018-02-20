@@ -1,17 +1,43 @@
 <template>
-  <div class="home">
-    <h1>Hello!</h1>
-    <p v-lang.welcome="{name: 'Vue.JS'}"></p>
-    <a href="/api/auth/logout">Wyloguj</a>
-  </div>
+    <div class="page-header">
+        <el-row>
+            <el-col :span="18">
+                <h1>ShopCMS</h1>
+            </el-col>
+            <el-col :span="6">
+                <a @click="setLanguage('en')">En</a>
+                <a @click="setLanguage('pl')">Pl</a>
+            </el-col>
+        </el-row>
+    </div>
 </template>
 
 <script>
+
 export default {
-  name: 'Home'
+  name: 'page-header',
+  data () {
+    return {
+    }
+  },
+  methods: {
+    setLanguage: (lang) => {
+      console.log(lang);
+      this.language = lang;
+      console.log(this.language);
+      setTimeout(() => window.location = "#",500);
+    }
+  }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+/* HEADER */
+
+.page-header {
+  margin-top: 50px;
+}
+.page-header h1 {
+  font-size: 2em;
+}
 </style>

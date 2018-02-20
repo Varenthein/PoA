@@ -1,35 +1,65 @@
 <template>
   <div id="app">
+
     <el-container>
-      <el-header>
-        <h1>ShopCMS</h1>
-      </el-header>
-      <el-main>
-          <router-view/>
-          <el-button>Default</el-button>
-          <el-button type="primary">Primary</el-button>
-          <el-button type="success">Success</el-button>
-          <el-button type="info">Info</el-button>
-          <el-button type="warning">Warning</el-button>
-          <el-button type="danger">Danger</el-button>
-      </el-main>
-      <el-footer>Footer</el-footer>
+
+        <!-- HEADER -->
+        <el-header height="150px">
+            <page-header></page-header>
+        </el-header>
+
+        <!-- MENU -->
+        <Menu></Menu>
+
+        <!-- MAIN -->
+        <el-main>
+            <router-view/>
+        </el-main>
+
+        <!-- FOOTER -->
+        <el-footer>
+            <Footer></Footer>
+        </el-footer>
+
     </el-container>
+
   </div>
 </template>
 
 <script>
+import Header from './components/Header'
+import Footer from './components/Footer'
+import Menu from './components/Menu'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: { PageHeader: Header, Menu: Menu, Footer: Footer }
 }
 </script>
 
 <style>
 
-#app {
-  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
-  max-width: 1200px;
-  margin: 0 auto;
+body {
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
 }
 
+#app {
+  max-width: 1000px;
+  margin: 0 auto;
+  color: #222;
+}
+
+/* additional */
+
+.line {
+  border-bottom: solid 1px #e6e6e6;
+}
+
+.text-smaller {
+  font-size: 12px;
+}
+
+.text-muted {
+  color: #555;
+}
 </style>

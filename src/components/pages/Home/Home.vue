@@ -1,8 +1,6 @@
 <template>
   <div class="home">
-    <h1>Hello!</h1>
-    <p v-lang.welcome="{name: 'Vue.JS'}"></p>
-    <a href="/api/auth/logout">Wyloguj</a>
+    Strona główna
   </div>
 </template>
 

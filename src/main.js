@@ -7,6 +7,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import MultiLanguage from 'vue-multilanguage'
 import { polish } from './lang/pl.lang.js'
+import { english } from './lang/en.lang.js'
 
 import App from './App'
 
@@ -15,7 +16,8 @@ Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(MultiLanguage, {
     default: 'pl',
-    pl: polish
+    pl: polish,
+    en: english
 })
 
 /* eslint-disable no-new */
