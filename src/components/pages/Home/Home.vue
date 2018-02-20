@@ -1,7 +1,9 @@
 <template>
+
   <div class="home">
     Strona główna
   </div>
+  
 </template>
 
 <script>

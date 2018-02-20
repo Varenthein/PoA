@@ -1,4 +1,5 @@
 <template>
+
   <div class="menu">
       <el-menu class="el-menu-demo" mode="horizontal" :default-active="activeLink">
        <template v-for="link in links">
@@ -17,6 +18,7 @@
        </el-menu-item>
      </el-menu>
   </div>
+  
 </template>
 
 <script>

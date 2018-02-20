@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
 
+  <div id="app">
     <el-container>
 
         <!-- HEADER -->
@@ -22,29 +22,41 @@
         </el-footer>
 
     </el-container>
-
   </div>
+
 </template>
 
 <script>
+
+/* IMPORT APP PARTS */
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Menu from './components/Menu'
 
+/* IMPORT SERVICES */
 import { userService } from './services/user.service.js'
 
 export default {
   name: 'App',
+  methods: {
+
+    /************************** VERIFY USER *************************/
+
+    verifyUser: function() {
+      userService.isLogged().then(() => {
+        this.$notify({title: this.translate('success'), message: this.translate('successfullyLogged'), type: 'success'})
+      })
+      .catch((err) => {
+        this.$notify({title: this.translate('accessDenied'), message: this.translate('accessDeniedMsg'), type: 'error'})
+        setTimeout(() => { window.location = "" }, 3000);
+      })
+    }
+
+  },
   created: function() {
 
     //Verify if user is logged in
-    userService.isLogged().then(() => {
-      this.$notify({title: this.translate('success'), message: this.translate('successfullyLogged'), type: 'success'})
-    })
-    .catch((err) => {
-      this.$notify({title: this.translate('accessDenied'), message: this.translate('accessDeniedMsg'), type: 'error'})
-      setTimeout(() => { window.location = "" }, 3000);
-    })
+    this.verifyUser();
 
   },
   components: { PageHeader: Header, Menu: Menu, PageFooter: Footer }
@@ -52,6 +64,8 @@ export default {
 </script>
 
 <style>
+
+/* WHOLE PAGE STYLING */
 
 body {
     font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
@@ -63,7 +77,7 @@ body {
   color: #222;
 }
 
-/* additional */
+/* Additional */
 
 .line {
   border-bottom: solid 1px #e6e6e6;

@@ -1,6 +1,10 @@
 export const polish = {
+
+  /* BASE */
   hi: 'Witaj',
   welcome: 'Welcome, {name}',
+
+  /* MENU */
   logout: 'Wyloguj',
   homepage: 'Strona główna',
   products: 'Produkty',
@@ -20,6 +24,8 @@ export const polish = {
   addPromotion: 'Dodaj promocję',
   sentNewsletter: 'Wysłane listy',
   addNewsletter: 'Wyślij nowy',
+
+  /* NOTIFICATIONS */
   success: 'Sukces!',
   accessDenied: 'Brak dostępu!',
   successfullyLogged: 'Zostałeś pomyślnie zalogowany!',
