@@ -37,20 +37,25 @@ export default {
   name: 'App',
   methods: {
 
-    /*loadUser: function() {
+    /***************************** LOAD USER **************************/
+
+    loadUser: function() {
       userService.getLoggedUser().then(response => {
-        $USER = response.data
-        console.log("User".$USER)
+        userService.setUser(response.data);
       }).catch(err => {
-        console.log(err);
+        this.$notify({title: this.translate('accessDenied'), message: this.translate('accessDeniedMsg'), type: 'error'})
+        setTimeout(() => { window.location = "" }, 3000);
       });
-    }*/
+    }
 
   },
   created: function() {
 
     //Verify if user is logged and load it when success
-    userService.isLogged().then(() => { this.$notify({title: this.translate('success'), message: this.translate('successfullyLogged'), type: 'success'}) })
+    userService.isLogged().then(() => {
+      this.$notify({title: this.translate('success'), message: this.translate('successfullyLogged'), type: 'success'})
+      this.loadUser();
+    })
     .catch((err) => {
       this.$notify({title: this.translate('accessDenied'), message: this.translate('accessDeniedMsg'), type: 'error'})
       setTimeout(() => { window.location = "" }, 3000);

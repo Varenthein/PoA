@@ -1,6 +1,20 @@
 import api from '@/config/api.config'
 
+export let $USER = false;
+
 export const userService = {
+
+  /********** SET USER INFO *************/
+
+  setUser: (user) => {
+    $USER = user
+  },
+
+  /********** USER CAN *************/
+
+  userCan: (perm) => {
+    return ($USER.permissions[perm])
+  },
 
   /********** GET USER BY ID ************/
 
