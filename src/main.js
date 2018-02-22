@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import router from './config/router.config'
 import ElementUI from 'element-ui'
+import locale from 'element-ui/lib/locale/lang/en'
 import 'element-ui/lib/theme-chalk/index.css'
 import MultiLanguage from 'vue-multilanguage'
 
@@ -15,7 +16,7 @@ import App from './App'
 Vue.config.productionTip = false
 
 /* INCLUDE EXTERNAL PACKAGE */
-Vue.use(ElementUI)
+Vue.use(ElementUI, { locale })
 Vue.use(MultiLanguage, {
     default: 'pl',
     pl: polish,

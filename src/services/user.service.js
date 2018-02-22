@@ -31,8 +31,8 @@ export const userService = {
       }).catch(err => {
         reject(false)
       });
-
     })
+
   }
 
 }

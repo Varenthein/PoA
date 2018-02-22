@@ -18,7 +18,7 @@
        </el-menu-item>
      </el-menu>
   </div>
-  
+
 </template>
 
 <script>
@@ -42,10 +42,8 @@ export default {
             this.User = response.data;
             this.User.permissions = JSON.parse(this.User.permissions);
             Object.keys(this.User.permissions).map((key, index) => {
-                console.log(key, this.User.permissions[key], this.User.permissions[key])
                 this.User.permissions[key] = (this.User.permissions[key] == "true") ? true : false;
             });
-            console.log(this.User.permissions);
           }).catch(err => {
             this.$notify({title: this.translate('accessDenied'), message: this.translate('accessDeniedMsg'), type: 'error'})
             setTimeout(() => { window.location = "" }, 3000);

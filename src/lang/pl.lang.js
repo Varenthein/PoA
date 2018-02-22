@@ -3,6 +3,7 @@ export const polish = {
   /* BASE */
   hi: 'Witaj',
   welcome: 'Welcome, {name}',
+  shopcms: 'ShopCMS',
 
   /* MENU */
   logout: 'Wyloguj',
@@ -29,5 +30,16 @@ export const polish = {
   success: 'Sukces!',
   accessDenied: 'Brak dostępu!',
   successfullyLogged: 'Zostałeś pomyślnie zalogowany!',
-  accessDeniedMsg: 'Nie możesz tu przebywać! Za chwilę zostaniesz przekierowany na stronę logowania!'
+  accessDeniedMsg: 'Nie możesz tu przebywać! Za chwilę zostaniesz przekierowany na stronę logowania!',
+  error: 'Błąd!',
+  errorMsg: 'Coś poszło nie tak. Możliwe, że nie masz odpowiednich uprawnień lub nastąpił niespodziewany błąd na serwerze. Spróbuj ponownie za kilkanaście sekund.',
+  couldntLoadOrders: 'Nie udało się załadować zamówień...',
+
+  /* HOME */
+  productsTwisted: 'produktów',
+  ordersTwisted: 'zamówień',
+  opinionsTwisted: 'opinii',
+  welcomeBack: 'Witaj z powrotem',
+  ordersWaiting: 'Zlecenia do zrealizowania',
+  opinionsWaiting: 'Niezatwierdzone opinie'
 }
