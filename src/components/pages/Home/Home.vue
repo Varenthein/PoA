@@ -19,13 +19,29 @@
 
     <!-- ORDERS BOX -->
     <h3 v-lang.ordersWaiting></h3>
-    <el-table empty-text="Nie masz zaległych zleceń :)" v-loading="loadingOrders" :data="orders" stripe style="width: 100%">
-      <el-table-column prop="date_recieved" label="Date" width="180">
+    <el-table :row-class-name="orderClassname" :default-sort = "{prop: 'date_recieved', order: 'ascending'}":empty-text="translate('noAwaitingOrders')" v-loading="loadingOrders" :data="orders" stripe style="width: 100%">
+      <el-table-column type="index" :index="indexMethod">
       </el-table-column>
-      <el-table-column prop="client" label="Name" width="180">
+      <el-table-column prop="date_recieved" :label="translate('id')" width="100">
+        <template slot-scope="scope">
+          OR-{{ scope.row.id }}
+        </template>
       </el-table-column>
-      <el-table-column  prop="product" label="Address">
+      <el-table-column sortable prop="date_recieved" :label="translate('date_recieved')" width="180">
+        <template slot-scope="scope">
+          <i class="el-icon-time"></i>
+          <span style="margin-left: 10px">{{ scope.row.date_recieved }}</span>
+        </template>
       </el-table-column>
+      <el-table-column prop="client" :label="translate('client')" width="160">
+      </el-table-column>
+      <el-table-column  prop="product" :label="translate('product')" width="270">
+      </el-table-column>
+      <el-table-column :label="translate('operations')" width="100">
+        <template slot-scope="scope">
+          <el-button size="mini" @click="showOrder(scope.row.id)" icon="el-icon-search"><span v-lang.show></span></el-button>
+        </template>
+   </el-table-column>
     </el-table>
 
 
@@ -43,6 +59,9 @@ import { productService } from '@/services/product.service.js'
 import { orderService } from '@/services/order.service.js'
 import { opinionService } from '@/services/opinion.service.js'
 
+/* IMPORT UTILS */
+import { getCurrentDate } from '@/utils/functions.js'
+
 export default {
   name: 'Home',
   data () {
@@ -53,10 +72,28 @@ export default {
       OpinionsAmount: 0,
       loading: true,
       loadingOrders: true,
-      orders: []
+      orders: [],
+      indexMethod: 1
     }
   },
   methods: {
+
+    /************************** SHOW ORDER *************************/
+
+    showOrder: function(id) {
+        this.$router.push('order/'+id)
+    },
+
+    /************************** ORDER CLASSNAME *************************/
+
+    orderClassname: function(scope) {
+      const DAY = 60 * 60 * 1000 * 24
+      console.log((new Date(getCurrentDate()) - new Date(scope.row.date_recieved)), DAY)
+      if ((new Date(getCurrentDate()) - new Date(scope.row.date_recieved)) > DAY) {
+       return 'warning-row'
+     } else return ''
+
+    },
 
     /************************** LOAD STATS *************************/
 
@@ -104,7 +141,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 
 .jumbotron {
   background: url('../../../assets/CoffeBack.jpg');
@@ -125,4 +162,8 @@ export default {
 .jumbotron ul  li {
   margin: 10px 0;
 }
+
+.el-table .warning-row {
+   background: #f5c6cb;
+ }
 </style>

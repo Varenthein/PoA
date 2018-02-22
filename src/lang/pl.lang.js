@@ -35,11 +35,23 @@ export const polish = {
   errorMsg: 'Coś poszło nie tak. Możliwe, że nie masz odpowiednich uprawnień lub nastąpił niespodziewany błąd na serwerze. Spróbuj ponownie za kilkanaście sekund.',
   couldntLoadOrders: 'Nie udało się załadować zamówień...',
 
+  /* PROPS */
+  date_recieved: 'Data otrzymania',
+  client: 'Klient',
+  product: 'Produkt',
+  id: 'Id',
+
+  /* OPERATIONS */
+  operations: 'Działania',
+  edit: 'Edytuj',
+  show: 'Pokaż',
+
   /* HOME */
   productsTwisted: 'produktów',
   ordersTwisted: 'zamówień',
   opinionsTwisted: 'opinii',
   welcomeBack: 'Witaj z powrotem',
   ordersWaiting: 'Zlecenia do zrealizowania',
-  opinionsWaiting: 'Niezatwierdzone opinie'
+  opinionsWaiting: 'Niezatwierdzone opinie',
+  noAwaitingOrders: 'Nie masz żadnych zaległych zleceń :)'
 }
