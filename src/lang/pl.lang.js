@@ -4,6 +4,9 @@ export const polish = {
   hi: 'Witaj',
   welcome: 'Welcome, {name}',
   shopcms: 'ShopCMS',
+  noData: 'Brak danych',
+  accept: 'Akceptuj',
+  reject: 'Odrzuć',
 
   /* MENU */
   logout: 'Wyloguj',
@@ -55,5 +58,9 @@ export const polish = {
   ordersWaiting: 'Zlecenia do zrealizowania',
   opinionsWaiting: 'Niezatwierdzone opinie',
   noAwaitingOrders: 'Nie masz żadnych zaległych zleceń :)',
-  noAwaitingOpinions: 'Nie masz żadnych zaległych zleceń :)'
+  noAwaitingOpinions: 'Nie masz żadnych zaległych zleceń :)',
+
+  /* OPINIONS */
+  couldntHandlePagination: 'Nieznany błąd... Paginacja nie będzie działać prawidłowo...'
+
 }

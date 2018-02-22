@@ -125,7 +125,7 @@ export default {
 
     },
 
-    /************************** ORDER CLASSNAME *************************/
+    /************************** OPINION CLASSNAME *************************/
 
     opinionClassname: function(scope) {
       const DAY = 60 * 60 * 1000 * 24
@@ -137,7 +137,7 @@ export default {
 
     /************************** LOAD STATS *************************/
 
-    loadStats: function(response) {
+    loadStats: function() {
       const promises = [ userService.getLoggedUser(), productService.count(), orderService.count(), opinionService.count()]
       Promise.all(promises)
       .then(data => {
@@ -154,7 +154,7 @@ export default {
 
     /************************** LOAD ORDERS *************************/
 
-    loadOrders: function(response) {
+    loadOrders: function() {
       orderService.getAwaitingOrders().then(response => {
         const resp = response.data
         if(resp.type && resp.type == "error") this.$notify({title: this.translate('error'), message: resp.msg, type: 'error'})
@@ -169,7 +169,7 @@ export default {
 
     /************************** LOAD OPINIONS *************************/
 
-    loadOpinions: function(response) {
+    loadOpinions: function() {
       opinionService.getAwaitingOpinions().then(response => {
         const resp = response.data
         if(resp.type && resp.type == "error") this.$notify({title: this.translate('error'), message: resp.msg, type: 'error'})

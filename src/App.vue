@@ -81,6 +81,7 @@ body {
 
 .line {
   border-bottom: solid 1px #e6e6e6;
+  margin: 10px 0;
 }
 
 .text-smaller {
@@ -89,5 +90,25 @@ body {
 
 .text-muted {
   color: #555;
+}
+
+/* Extra */
+
+.el-main {
+  min-height: 200px;
+}
+
+.el-loading-spinner {
+  margin: 50px 0;
+}
+
+.el-menu-item {
+  padding: 0;
+}
+
+.el-menu a {
+  display: block;
+  width: 100%;
+  padding: 0 20px;
 }
 </style>

@@ -42,8 +42,8 @@ export default {
             this.User = response.data;
             this.User.permissions = JSON.parse(this.User.permissions);
             Object.keys(this.User.permissions).map((key, index) => {
-                this.User.permissions[key] = (this.User.permissions[key] == "true") ? true : false;
-            });
+                this.User.permissions[key] = (this.User.permissions[key] == "true") ? true : false
+            })
           }).catch(err => {
             this.$notify({title: this.translate('accessDenied'), message: this.translate('accessDeniedMsg'), type: 'error'})
             setTimeout(() => { window.location = "" }, 3000);
@@ -58,7 +58,7 @@ export default {
 
     //load menu structure
     this.links = [
-      { title: this.translate('homepage'), pathTo: 'home', subMenu: false },
+      { title: this.translate('homepage'), pathTo: '/home', subMenu: false },
       { title: this.translate('products'), perm: 'seeProduct', pathTo: 'products', subMenu: [
         { title: this.translate('allProducts'), pathTo: 'ProductsAll', subMenu: false },
         { title: this.translate('addProduct'), pathTo: 'ProductAdd', subMenu: false },
@@ -74,7 +74,7 @@ export default {
         { title: this.translate('allPromotions'), pathTo: 'PromotionsAll', subMenu: false },
         { title: this.translate('addPromotion'), pathTo: 'PromotionAdd', subMenu: false }
       ]},
-      { title: this.translate('opinions'), pathTo: 'Opinions', subMenu: false},
+      { title: this.translate('opinions'), pathTo: '/opinions', perm: 'seeOpinion', subMenu: false},
       { title: this.translate('newsletter'), pathTo: 'Newsletter', subMenu: false },
       { title: this.translate('stats'), pathTo: 'stats', subMenu: false}
     ]
