@@ -15,6 +15,13 @@ export const opinionService = {
       });
     })
 
-  }
+  },
+
+
+    /********** GET AWAITING ORDERS ************/
+
+    getAwaitingOpinions: () => {
+      return api.get('/opinion/awaiting')
+    }
 
 }

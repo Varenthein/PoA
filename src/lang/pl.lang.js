@@ -40,6 +40,7 @@ export const polish = {
   client: 'Klient',
   product: 'Produkt',
   id: 'Id',
+  opinion: 'Opinia',
 
   /* OPERATIONS */
   operations: 'Działania',
@@ -53,5 +54,6 @@ export const polish = {
   welcomeBack: 'Witaj z powrotem',
   ordersWaiting: 'Zlecenia do zrealizowania',
   opinionsWaiting: 'Niezatwierdzone opinie',
-  noAwaitingOrders: 'Nie masz żadnych zaległych zleceń :)'
+  noAwaitingOrders: 'Nie masz żadnych zaległych zleceń :)',
+  noAwaitingOpinions: 'Nie masz żadnych zaległych zleceń :)'
 }
