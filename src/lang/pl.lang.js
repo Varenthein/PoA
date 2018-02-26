@@ -65,6 +65,7 @@ export const polish = {
   yes: "Tak",
   add: 'Dodaj',
   option: 'Opcja',
+  browse: 'Przeglądaj',
 
   /* VALIDATION */
   validateNameIsRequired: 'Proszę podać nazwę produktu',
@@ -94,7 +95,12 @@ export const polish = {
   addParam: 'Dodaj parametr',
   addOption: 'Dodaj opcję',
   addChoice: 'Dodaj wybór',
-  personalization: 'Personalizacja'
+  personalization: 'Personalizacja',
 
+  /* MEDIA EXPLORER */
+  choosePhoto: 'Wybierz zdjęcie',
+  couldntLoadImages: 'Nie udało się załadować zdjęć',
+  addPhoto: 'Dodaj zdjęcie',
+  catalog: 'Katalog'
 
 }

@@ -67,10 +67,12 @@
         <!-- PERSONALIZATION -->
         <h4 v-lang.personalization></h4>
 
+        <image-explorer width="150px" height="150px" />
         <div class="option" v-for="option in product.options">
           <el-input v-model="option.title"></el-input>
           <el-button type="success" plain size="small" @click="addChoice(option)" style="float:right" icon="el-icon-plus">{{ translate('addChoice') }}</el-button>
           <el-button type="danger" @click="delOption(option)" style="float:right" plain size="small" icon="el-icon-close"></el-button>
+
         </div>
 
         <el-button type="success" plain size="small" @click="addOption()" icon="el-icon-plus">{{ translate('addOption') }}</el-button>
@@ -93,6 +95,9 @@
 import { userService, userMixin } from '@/services/user.service.js'
 import { categoryService } from '@/services/category.service.js'
 import { productService } from '@/services/product.service.js'
+
+/* IMPROT OTHERS */
+import imageExplorer from '@/components/shared/imageExplorer'
 
 
 export default {
@@ -213,7 +218,7 @@ export default {
 
       })
 
-  }
+  }, components: { imageExplorer: imageExplorer }
 }
 </script>
 
