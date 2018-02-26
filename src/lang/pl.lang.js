@@ -28,6 +28,7 @@ export const polish = {
   addPromotion: 'Dodaj promocję',
   sentNewsletter: 'Wysłane listy',
   addNewsletter: 'Wyślij nowy',
+  others: 'Inne',
 
   /* NOTIFICATIONS */
   success: 'Sukces!',
@@ -37,6 +38,10 @@ export const polish = {
   error: 'Błąd!',
   errorMsg: 'Coś poszło nie tak. Możliwe, że nie masz odpowiednich uprawnień lub nastąpił niespodziewany błąd na serwerze. Spróbuj ponownie za kilkanaście sekund.',
   couldntLoadOrders: 'Nie udało się załadować zamówień...',
+  couldntLoadProducts: 'Nie udało się załadować produktów...',
+  couldntLoadOpinions: 'Nie udało się załadować opinii...',
+  couldntLoadCategories: 'Nie udało się załadować kategorii...',
+  productDeleted: 'Produkt został usunięty!',
 
   /* PROPS */
   date_recieved: 'Data otrzymania',
@@ -44,11 +49,26 @@ export const polish = {
   product: 'Produkt',
   id: 'Id',
   opinion: 'Opinia',
+  name: 'Nazwa',
+  kind: 'Rodzaj',
+  personalized: 'Personalizacja',
+  param: 'Parametr',
+  value: 'Wartość',
 
   /* OPERATIONS */
   operations: 'Działania',
   edit: 'Edytuj',
   show: 'Pokaż',
+  remove: 'Usuń',
+  ok: "Ok",
+  cancel: "Anuluj",
+  yes: "Tak",
+  add: 'Dodaj',
+  option: 'Opcja',
+
+  /* VALIDATION */
+  validateNameIsRequired: 'Proszę podać nazwę produktu',
+  validateProdLength: 'Długość musi mieścić się w przedziale (3-100)',
 
   /* HOME */
   productsTwisted: 'produktów',
@@ -61,6 +81,20 @@ export const polish = {
   noAwaitingOpinions: 'Nie masz żadnych zaległych zleceń :)',
 
   /* OPINIONS */
-  couldntHandlePagination: 'Nieznany błąd... Paginacja nie będzie działać prawidłowo...'
+  couldntHandlePagination: 'Nieznany błąd... Paginacja nie będzie działać prawidłowo...',
+
+  /* PRODUCTS */
+  removeProductConfirmation: 'Ta operacja na zawsze usunie dany produkt. Chcesz kontynuować?',
+  addproduct: 'Dodaj produkt',
+  basicInfo: 'Podstawowe dane',
+  technicalData: 'Dane techniczne',
+  personalizedProd: 'personalizowany',
+  simpleProd: 'prosty',
+  addCategory: 'Dodaj kategorię',
+  addParam: 'Dodaj parametr',
+  addOption: 'Dodaj opcję',
+  addChoice: 'Dodaj wybór',
+  personalization: 'Personalizacja'
+
 
 }

@@ -77,6 +77,10 @@ body {
   color: #222;
 }
 
+h2 {
+  margin-top: 1.5em;
+}
+
 /* Additional */
 
 .line {
@@ -119,5 +123,5 @@ body {
 .el-table--striped .el-table__body tr.el-table__row--striped td {
    background: none;
  }
- 
+
 </style>

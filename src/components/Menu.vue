@@ -30,7 +30,7 @@ export default {
   data () {
     return {
        User: { permissions: {}},
-       activeLink:  'Home'
+       activeLink:  '/home'
     }
   },
   methods: {
@@ -59,8 +59,8 @@ export default {
     //load menu structure
     this.links = [
       { title: this.translate('homepage'), pathTo: '/home', subMenu: false },
-      { title: this.translate('products'), perm: 'seeProduct', pathTo: 'products', subMenu: [
-        { title: this.translate('allProducts'), pathTo: 'ProductsAll', subMenu: false },
+      { title: this.translate('products'), perm: 'seeProduct', pathTo: '/products', subMenu: [
+        { title: this.translate('allProducts'), perm: 'seeProduct', pathTo: '/products', subMenu: false },
         { title: this.translate('addProduct'), pathTo: 'ProductAdd', subMenu: false },
         { title: this.translate('categories'), pathTo: 'Categories', subMenu: false }
       ]},
@@ -76,7 +76,9 @@ export default {
       ]},
       { title: this.translate('opinions'), pathTo: '/opinions', perm: 'seeOpinion', subMenu: false},
       { title: this.translate('newsletter'), pathTo: 'Newsletter', subMenu: false },
-      { title: this.translate('stats'), pathTo: 'stats', subMenu: false}
+      { title: this.translate('others'), pathTo: 'others', subMenu: [
+              { title: this.translate('stats'), pathTo: 'stats', subMenu: false}
+      ]}
     ]
   }
 }

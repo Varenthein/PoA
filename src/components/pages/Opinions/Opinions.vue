@@ -50,23 +50,10 @@ export default {
       itemsPerPage: 10,
       loading: true,
       opinions: [],
-      indexMethod: 1,
-      removingLoader: [],
-      acceptingLoader: []
+      indexMethod: 1
     }
   },
   methods: {
-
-
-    /************************** ORDER CLASSNAME *************************/
-
-    opinionClassname: function(scope) {
-      const DAY = 60 * 60 * 1000 * 24
-      if ((new Date(getCurrentDate()) - new Date(scope.row.date_sent)) > DAY) {
-       return 'warning-row'
-     } else return ''
-
-    },
 
     /************************** LOAD OPINIONS *************************/
 
@@ -92,7 +79,6 @@ export default {
     loadPages: function() {
 
       opinionService.countAwaiting().then(response => {
-        console.log(response)
         if(response.data && response.data.type == "error") this.$notify({title: this.translate('error'), message: response.data.msg, type: 'error'})
         else {
            this.opinionsAmount = response
@@ -112,7 +98,7 @@ export default {
           this.$notify({title: this.translate('error'), message: response.data.msg, type: 'error'})
         }
         else {
-           this.$notify({title: this.translate('success'), message: response.data.msg, type: 'success'})
+           this.$message({title: this.translate('success'), message: response.data.msg, type: 'success'})
            this.loadOpinions()
          }
       }).catch(err => {
@@ -130,7 +116,7 @@ export default {
           this.$notify({title: this.translate('error'), message: response.data.msg, type: 'error'})
         }
         else {
-           this.$notify({title: this.translate('success'), message: response.data.msg, type: 'success'})
+           this.$message({title: this.translate('success'), message: response.data.msg, type: 'success'})
            this.loadOpinions()
          }
       }).catch(err => {

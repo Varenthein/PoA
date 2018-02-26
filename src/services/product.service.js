@@ -15,6 +15,19 @@ export const productService = {
       });
     })
 
+  },
+
+  /********** GET PRODUCTS WITHING RANGE ************/
+
+  getProductsRange: (limit_from, limit_to) => {
+      return api.get('/product/range/'+limit_from+'/'+limit_to)
+  },
+
+  /********** REMOVE OPINION ************/
+
+  removeProduct: (id) => {
+      return api.delete('/product/remove/'+id)
   }
+
 
 }
