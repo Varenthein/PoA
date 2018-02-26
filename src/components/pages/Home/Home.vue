@@ -131,7 +131,7 @@ export default {
       const DAY = 60 * 60 * 1000 * 24
       if ((new Date(getCurrentDate()) - new Date(scope.row.date_sent)) > DAY) {
        return 'warning-row'
-     } else return ''
+      } else return ''
 
     },
 
@@ -220,7 +220,4 @@ export default {
   margin: 10px 0;
 }
 
-.el-table .warning-row {
-   background: #f5c6cb;
- }
 </style>

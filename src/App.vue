@@ -111,4 +111,13 @@ body {
   width: 100%;
   padding: 0 20px;
 }
+
+.el-table .warning-row {
+   background: #f5c6cb;
+ }
+
+.el-table--striped .el-table__body tr.el-table__row--striped td {
+   background: none;
+ }
+ 
 </style>
