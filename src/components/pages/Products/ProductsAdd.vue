@@ -1,22 +1,21 @@
 <template>
+<div class="productsAdd" v-loading="loading">
 
-  <div class="productsAdd" v-loading="loading">
+  <!-- BREADCUMB -->
+  <el-breadcrumb separator-class="el-icon-arrow-right">
+    <el-breadcrumb-item><span v-lang.shopcms></span></el-breadcrumb-item>
+    <el-breadcrumb-item :to="{ path: '/products' }"><span v-lang.products></span></el-breadcrumb-item>
+    <el-breadcrumb-item :to="{ path: '/products/add' }"><span v-lang.addProduct></span></el-breadcrumb-item>
+  </el-breadcrumb>
 
-    <!-- BREADCUMB -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item><span v-lang.shopcms></span></el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/products' }"><span v-lang.products></span></el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/products/add' }"><span v-lang.addProduct></span></el-breadcrumb-item>
-    </el-breadcrumb>
+  <!-- TITLE -->
+  <h2 class="title" v-lang.addProduct></h2>
 
-    <!-- TITLE -->
-    <h2 class="title" v-lang.addProduct></h2>
+  <!-- FORM -->
 
-    <!-- FORM -->
-
-    <el-form :model="product" label-position="left" :rules="rules" ref="ruleForm" @submit.native.prevent label-width="120px">
-      <el-row>
-        <el-col :span="12">
+  <el-form :model="product" label-position="left" :rules="rules" ref="ruleForm" @submit.native.prevent label-width="120px">
+    <el-row>
+      <el-col :span="12">
 
         <!-- BASIC DATA -->
         <h4 v-lang.basicInfo></h4>
@@ -34,7 +33,7 @@
             <el-option v-for="cat in categories" :label="cat.name" :value="cat"></el-option>
           </el-select>
           <div>
-              <el-tag v-for="cat in product.categories" :key="cat.name" closable type="" @close="delCat(cat)" size="small"> {{cat.name}}</el-tag>
+            <el-tag v-for="cat in product.categories" :key="cat.name" closable type="" @close="delCat(cat)" size="small"> {{cat.name}}</el-tag>
           </div>
         </el-form-item>
 
@@ -77,15 +76,17 @@
             <li v-for="choice in option.choices">
               <el-form :inline="true">
                 <el-form-item label="">
-                  <el-input v-model="choice.param" style="width: 250px"></el-input>
+                  <el-tooltip class="item" effect="dark" :content="translate('name')" placement="top">
+                    <el-input v-model="choice.param" style="width: 230px"></el-input>
+                  </el-tooltip>
                 </el-form-item>
                 <el-form-item label="">
-                   <el-tooltip class="item" effect="dark" :content="translate('price')" placement="top">
-                     <el-input type="number" min="0" style="width: 90px" v-model="choice.price"></el-input>
-                   </el-tooltip>
+                  <el-tooltip class="item" effect="dark" :content="translate('price')" placement="top">
+                    <el-input type="number" min="0" style="width: 90px" v-model="choice.price"></el-input>
+                  </el-tooltip>
                 </el-form-item>
                 <el-form-item label="">
-                  <image-explorer width="45px" height="45px" v-on:chosenImage="choice.image = $event"/>
+                  <image-explorer width="45px" height="45px" v-on:chosenImage="choice.image = $event" />
                 </el-form-item>
               </el-form>
             </li>
@@ -95,45 +96,109 @@
         <el-button type="success" plain size="small" @click="addOption()" icon="el-icon-plus">{{ translate('addOption') }}</el-button>
         <div class="line"></div>
 
-        </el-col>
-        <el-col :span="12">
-        </el-col>
-      </el-row>
-    </el-form>
+      </el-col>
+      <el-col :span="12">
+
+        <!-- MEDIA BOX -->
+        <div class="mediaBox">
+          <h4 v-lang.images style="display: inline-block"></h4>
+          <image-explorer width="150px" height="35px" style="float: right; margin-top: 15px" :title="translate('choosePhoto')" v-on:chosenImage="product.photos.push($event)" />
+          <el-alert :closable="false" :title="translate('noImages')" v-if="!product.photos.length" type="info" show-icon></el-alert>
+          <div class="catalog">
+            <ul class="el-upload-list el-upload-list--picture-card">
+              <li v-for="img in product.photos" tabindex="0" class="el-upload-list__item is-success">
+                <img :src="img.thumb" alt="" class="el-upload-list__item-thumbnail">
+                <a class="el-upload-list__item-name"><i class="el-icon-document"></i>{{img.filename}}</a>
+                <i class="el-icon-close"></i><i class="el-icon-close-tip"></i>
+                <span class="el-upload-list__item-actions">
+                        <span @click="removeImage(img)" class="el-upload-list__item-delete"><i class="el-icon-delete"></i></span>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <p v-if="product.photos.length" class="text-muted text-smaller" v-lang.youChosenPhotos="{photos: product.photos.length}"> </p>
+        <div class="line"></div>
+
+        <!-- SHORT DESCRIPTION -->
+        <div class="shortDesc">
+            <h4 v-lang.shortDesc></h4>
+            <el-input type="textarea" :placeholder="translate('shortDescPlaceholder')" v-model="product.short_description"></el-input>
+        </div>
+        <div class="line"></div>
+
+        <!-- DESCRIPTION -->
+        <div class="longDesc">
+            <h4 v-lang.longDesc></h4>
+            <medium-editor :text='product.description' class="mEditor" options="{toolbar: {buttons: ['bold', 'italic', 'underline', 'anchor', 'h2', 'h3', 'quote']}}" custom-tag='div' v-on:edit='updateDesc'></medium-editor>
+        </div>
+        <div class="line"></div>
+
+        <!-- REQUIRED INFO -->
+        <div class="requiredInfo">
+            <h4 v-lang.requiredInfo style="display: inline-block"></h4>
+            <el-button type="success" plain size="small" @click="addRequirement()" style="float:right; margin-top: 15px" icon="el-icon-plus">{{ translate('addRequirement') }}</el-button>
+            <el-alert :closable="false" :title="translate('noRequirements')" v-if="!product.requirements.length" type="info" show-icon></el-alert>
+            <ul>
+              <li v-for="req in product.requirements">
+                <strong>{{ req.name }}:</strong>
+                <el-radio v-model="req.type" label="text">{{ translate('text')}}</el-radio>
+                <el-radio v-model="req.type" label="file">{{ translate('file')}}</el-radio>
+                <el-checkbox style="float: right" v-model="req.required">{{ translate('required') }}</el-checkbox>
+                <el-collapse>
+                  <el-collapse-item :title="translate('desc')">
+                      <el-input type="textarea" :placeholder="translate('requirementDescPlaceholder')" v-model="product.short_description"></el-input>
+                  </el-collapse-item>
+                </el-collapse>
+                <el-button type="danger" @click="delRequirement(req)" style="" plain size="mini" icon="el-icon-close"></el-button>
+              </li>
+            </ul>
+        </div>
 
 
-  </div>
+      </el-col>
+    </el-row>
+    <el-button type="success" size="small" icon="el-icon-plus">{{ translate('addProduct') }}</el-button>
+  </el-form>
 
+
+</div>
 </template>
 
 <script>
-
 /* IMPORT SERVICES */
 import { userService, userMixin } from '@/services/user.service.js'
-import { categoryService } from '@/services/category.service.js'
+import { categoryService} from '@/services/category.service.js'
 import { productService } from '@/services/product.service.js'
 
-/* IMPROT OTHERS */
+/* IMPORT IMAGE EXPLORER */
 import imageExplorer from '@/components/shared/imageExplorer'
+
+/* IMPORT MEDIUM EDITOR */
+import editor from 'vue2-medium-editor'
+import '@/assets/css/medium/mediumEditor.min.css'
+import '@/assets/css/medium/beagle.min.css'
+
 
 
 export default {
   name: 'ProductsAdd',
   mixins: [userMixin],
-  data () {
+  data() {
     return {
       loading: true,
       categories: [],
       category: '',
       product: {
         name: '',
+        short_description: '',
         description: '',
-        photos: '',
+        photos: [],
         technical_data: [],
         categories: [],
         type: true,
         options: [],
-        requirements: '',
+        requirements: [],
         personalization: ''
       },
       rules: {}
@@ -141,107 +206,178 @@ export default {
   },
   methods: {
 
+    processEditOperation: function (operation) {
+          this.text = operation.api.origElements.innerHTML
+        },
+
     /***************************** PREAPRE FORM ********************************/
 
     prepareForm() {
       categoryService.getAll().then(response => {
-        if(response.data && response.data.type == "error") this.$notify({title: this.translate('error'), message: response.data.msg, type: 'error'})
+        if (response.data && response.data.type == "error") this.$notify({
+          title: this.translate('error'),
+          message: response.data.msg,
+          type: 'error'
+        })
         else {
-           this.categories = response.data
-           this.rules = {
-               name: [
-                 { required: true, message: this.translate('validateNameIsRequired'), trigger: 'change' },
-                 { min: 3, max: 100, message: this.translate('validateProdLength'), trigger: 'change' }
-               ]
-             }
-           this.loading = false
+          this.categories = response.data
+          this.rules = {
+            name: [{
+                required: true,
+                message: this.translate('validateNameIsRequired'),
+                trigger: 'change'
+              },
+              {
+                min: 3,
+                max: 100,
+                message: this.translate('validateProdLength'),
+                trigger: 'change'
+              }
+            ]
+          }
+          this.loading = false
         }
       }).catch(err => {
-          this.$notify({title: this.translate('error'), message: this.translate('couldntLoadCategories'), type: 'warning'})
+        this.$notify({
+          title: this.translate('error'),
+          message: this.translate('couldntLoadCategories'),
+          type: 'warning'
+        })
       })
     },
 
     /***************************** ADD CATEGORY ********************************/
 
     addCat() {
-      if(this.product.categories.indexOf(this.category) == -1) this.product.categories.push(this.category)
+      if (this.product.categories.indexOf(this.category) == -1) this.product.categories.push(this.category)
     },
 
     /***************************** REMOVE CATEGORY ********************************/
 
     delCat(cat) {
-      this.product.categories.splice(this.product.categories.indexOf(cat),1)
+      this.product.categories.splice(this.product.categories.indexOf(cat), 1)
     },
 
     /***************************** ADD PARAM ********************************/
 
     addParam() {
       this.$prompt(this.translate('name'), this.translate('addParam'), {
-       confirmButtonText: this.translate('add'),
-       cancelButtonText: this.translate('cancel'),
-     }).then(value => {
-        this.product.technical_data.push({ param: value.value, value: ''})
-     }).catch(() => {
+        confirmButtonText: this.translate('add'),
+        cancelButtonText: this.translate('cancel'),
+      }).then(value => {
+        this.product.technical_data.push({
+          param: value.value,
+          value: ''
+        })
+      }).catch(() => {
         //input cancelled
-     });
-   },
+      });
+    },
 
-   /***************************** REMOVE PARAM ********************************/
+    /***************************** REMOVE PARAM ********************************/
 
-   delParam(param) {
-     this.product.technical_data.splice(this.product.technical_data.indexOf(param),1)
-   },
+    delParam(param) {
+      this.product.technical_data.splice(this.product.technical_data.indexOf(param), 1)
+    },
 
-   /***************************** ADD OPTION ********************************/
+    /***************************** ADD OPTION ********************************/
 
-   addOption() {
-     this.$prompt(this.translate('option'), this.translate('addOption'), {
-      confirmButtonText: this.translate('add'),
-      cancelButtonText: this.translate('cancel'),
-    }).then(value => {
-       this.product.options.push({ title: value.value, choices: []})
-    }).catch(() => {
-       //input cancelled
-    });
-  },
+    addOption() {
+      this.$prompt(this.translate('option'), this.translate('addOption'), {
+        confirmButtonText: this.translate('add'),
+        cancelButtonText: this.translate('cancel'),
+      }).then(value => {
+        this.product.options.push({
+          title: value.value,
+          choices: []
+        })
+      }).catch(() => {
+        //input cancelled
+      });
+    },
 
-  /***************************** REMOVE OPTION ********************************/
+    /***************************** REMOVE OPTION ********************************/
 
-  delOption(opt) {
-    this.product.options.splice(this.product.options.indexOf(opt),1)
-  },
+    delOption(opt) {
+      this.product.options.splice(this.product.options.indexOf(opt), 1)
+    },
 
-  /***************************** ADD CHOICE ********************************/
+    /***************************** ADD CHOICE ********************************/
 
-  addChoice(option) {
-    this.$prompt(this.translate('name'), this.translate('addChoice'), {
-     confirmButtonText: this.translate('add'),
-     cancelButtonText: this.translate('cancel'),
-   }).then(value => {
-      option.choices.push({ param: value.value, price: 0, image: ''})
-   }).catch((err) => {
-      //input cancelled
-   });
- },
+    addChoice(option) {
+      this.$prompt(this.translate('name'), this.translate('addChoice'), {
+        confirmButtonText: this.translate('add'),
+        cancelButtonText: this.translate('cancel'),
+      }).then(value => {
+        option.choices.push({
+          param: value.value,
+          price: 0,
+          image: ''
+        })
+      }).catch((err) => {
+        //input cancelled
+      });
+    },
+
+    /***************************** REMOVE IMAGE *******************************/
+
+    removeImage(img) {
+      this.product.photos.splice(this.product.photos.indexOf(img), 1)
+    },
+
+    /***************************** UPDATE DESC *******************************/
+    updateDesc(operation) {
+      this.product.description = operation.api.origElements.innerHTML
+    },
+
+    /***************************** UPDATE REQUIREMENT **************************/
+
+    addRequirement() {
+      this.$prompt(this.translate('name'), this.translate('addRequirement'), {
+        confirmButtonText: this.translate('add'),
+        cancelButtonText: this.translate('cancel'),
+      }).then(value => {
+        this.product.requirements.push({
+          name: value.value,
+          type: 'text',
+          required: false,
+          desc: ''
+        })
+      }).catch(() => {
+        //input cancelled
+      });
+    },
+
+    /***************************** REMOVE REQUIREMENT ********************************/
+
+    delRequirement(req) {
+      this.product.requirements.splice(this.product.requirements.indexOf(req), 1)
+    },
+
 
   },
   created: function() {
 
-      this.signIn().then(user => {
+    this.signIn().then(user => {
 
-          if(!this.userCan('addProduct')) this.getOut();
+      if (!this.userCan('addProduct')) this.getOut();
 
-          this.prepareForm();
+      this.prepareForm();
 
-      })
+    })
 
-  }, components: { imageExplorer: imageExplorer }
+  },
+  components: {
+    imageExplorer: imageExplorer, 'medium-editor': editor
+  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.productsAdd .el-col:first-child {
+  padding-right: 30px;
+}
 .title {
   display: inline-block;
 }
@@ -255,31 +391,48 @@ export default {
   max-width: 250px;
 }
 
-.el-tag + .el-tag {
-    margin-left: 10px;
+.el-tag+.el-tag {
+  margin-left: 10px;
 }
 
 .el-button {
   margin-top: 5px;
   margin-right: 5px;
 }
+
 .option {
-    border: dashed 2px #e6e6e6;
-    padding: 10px;
-    transition: .3s;
-    margin-bottom: 20px;
+  border: dashed 2px #e6e6e6;
+  padding: 10px;
+  transition: .3s;
+  margin-bottom: 20px;
 }
 
 .option:hover {
-    border: dashed 2px #aaa;
+  border: dashed 2px #aaa;
 }
 
-.option ul {
+.option ul, .requiredInfo ul {
   list-style-type: none;
   padding-left: 0;
 }
 
-.option ul form::before {
+.requiredInfo ul li {
+  border-bottom: dashed 1px #ccc;
+  margin: 0px 0 5px 0px;
+  padding: 10px 0;
+}
+
+.requiredInfo ul li .el-collapse {
+  margin-top: 5px;
+  margin-left: 25px;
+  border-top: none;
+}
+
+.requiredInfo ul li  strong {
+  margin-right: 30px;
+}
+
+.option ul form::before, .requiredInfo ul li::before {
   content: "";
   display: block;
   width: 10px;
@@ -290,16 +443,50 @@ export default {
   border-radius: 100%;
 }
 
+.requiredInfo ul li::before {
+  display: inline-block;
+  margin: 0px 8px;
+}
+
 .option form {
   display: flex;
   align-items: center;
 }
 
+.shortDesc textarea {
+  height: 200px;
+}
+
+/* MEDIUM EDITOR */
+
+.mEditor {
+  min-height: 200px;
+  border: dashed 2px #e6e6e6;
+  transition: .3s;
+  outline: none;
+  padding: 20px;
+}
+
+.mEditor:hover, .mEditor:active {
+  border: dashed 2px #aaa;
+  outline: none;
+}
+
 </style>
 
 <style>
+.option .simple.el-input {
+  max-width: 200px;
+}
+
 .option .simple .el-input__inner {
-  border:none;
+  max-width: 200px;
+  border: none;
   font-weight: bold;
 }
+
+.mEditor p:first-child {
+  margin-top: 0;
+}
+
 </style>

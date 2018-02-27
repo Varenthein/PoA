@@ -17,7 +17,7 @@
       <div class="catalog">
         <ul class="el-upload-list el-upload-list--picture-card">
           <li v-for="img in images" @click="chooseImage(img)" tabindex="0" :class="(img.active) ? 'el-upload-list__item is-success active' : 'el-upload-list__item is-success'">
-            <img :src="imagesPath+img.thumb" alt="" class="el-upload-list__item-thumbnail">
+            <img :src="img.thumb" alt="" class="el-upload-list__item-thumbnail">
             <a class="el-upload-list__item-name"><i class="el-icon-document"></i>{{img.filename}}</a>
             <i class="el-icon-close"></i><i class="el-icon-close-tip"></i>
             <span class="el-upload-list__item-actions">
@@ -113,7 +113,7 @@ export default {
         else {
            resp.forEach(item => {
              item.active = false
-             item.thumb = 'thumb_'+item.filename
+             item.thumb = this.imagesPath+'thumb_'+item.filename
            })
            this.images = resp
            this.loading = false
@@ -212,14 +212,16 @@ export default {
   cursor: pointer;
 }
 
-.el-upload-list__item-thumbnail {
-  object-fit: cover;
-}
-
 .el-upload-list__item.active {
   border: 2px solid #67c23a;
   opacity: 0.6;
   transform: scale(0.9);
 }
 
+</style>
+
+<style>
+.el-upload-list__item-thumbnail {
+  object-fit: cover;
+}
 </style>

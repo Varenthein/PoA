@@ -55,6 +55,10 @@ export const polish = {
   param: 'Parametr',
   value: 'Wartość',
   price: 'Cena',
+  text: 'Tekst',
+  file: 'Plik',
+  required: 'Wymagane',
+  desc: 'Opis',
 
   /* OPERATIONS */
   operations: 'Działania',
@@ -98,6 +102,17 @@ export const polish = {
   addOption: 'Dodaj opcję',
   addChoice: 'Dodaj wybór',
   personalization: 'Personalizacja',
+  images: 'Zdjęcia',
+  noImages: 'Nie wybrałeś jeszcze żadnych zdjęć...',
+  youChosenPhotos: 'Wybrałeś {photos} zdjęć',
+  shortDesc: 'Zajawka',
+  shortDescPlaceholder: 'Opisz krótko produkt',
+  longDesc: 'Długi opis',
+  longDescPlaceholder: 'Opisz dłużej produkt',
+  requiredInfo: 'Wymagane informacje',
+  addRequirement: 'Dodaj wymaganie',
+  requirementDescPlaceholder: 'Opisz krótko czego oczekujesz  od klienta',
+  noRequirements: 'Nie ustawiłeś jeszcze żadnych wymagań',
 
   /* MEDIA EXPLORER */
   choosePhoto: 'Wybierz zdjęcie',
