@@ -3,20 +3,21 @@
   <div class="imageExplorer">
 
     <!-- EXPLORER BOX -->
-    <el-dialog :title="translate('choosePhoto')" :visible.sync="dialogVisible" width="50%" :before-close="handleClose">
+    <el-dialog :title="translate('choosePhoto')" :visible.sync="dialogVisible" width="50%">
 
+      <!-- upload section -->
       <h4 v-lang.addPhoto style=""></h4>
-      <el-upload ref="upload" action="http://localhost:9000/api/image/upload"  :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :on-success="checkSuccess">
+      <el-upload ref="upload" action="http://localhost:9000/api/image/upload" :on-remove="handleRemove" :on-success="checkSuccess">
         <el-button plain type="success" size="small" icon="el-icon-plus">{{ this.translate('browse') }}</el-button>
       </el-upload>
       <div class="line"></div>
 
+      <!-- catalog section -->
       <h4 v-lang.catalog></h4>
-      <div :loading="imagesLoader" class="catalog">
+      <div class="catalog">
         <ul class="el-upload-list el-upload-list--picture-card">
           <li v-for="img in images" @click="chooseImage(img)" tabindex="0" :class="(img.active) ? 'el-upload-list__item is-success active' : 'el-upload-list__item is-success'">
-            <img :src="imagesPath+img.filename" alt="" class="el-upload-list__item-thumbnail">
-            {{ img }}
+            <img :src="imagesPath+img.thumb" alt="" class="el-upload-list__item-thumbnail">
             <a class="el-upload-list__item-name"><i class="el-icon-document"></i>{{img.filename}}</a>
             <i class="el-icon-close"></i><i class="el-icon-close-tip"></i>
             <span class="el-upload-list__item-actions">
@@ -25,19 +26,22 @@
           </li>
         </ul>
       </div>
-      <!-- PAGINATION -->
+
+      <!-- pagination -->
       <div class="block">
         <el-pagination @current-change="handlePageChange" :currentPage="page" layout="prev, pager, next" :total="imagesAmount">
         </el-pagination>
       </div>
+
+      <!-- dialog footer -> buttons -->
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
+        <el-button @click="dialogVisible = false" v-lang.cancel></el-button>
+        <el-button type="primary" @click="handleClose" v-lang.choose></el-button>
       </span>
     </el-dialog>
 
     <!-- EXPLORER BUTTON -->
-    <el-button type="success" @click="loadExplorer" plain size="small" :style="btnStyle">{{ title }}</el-button>
+    <el-button type="success" @click="loadExplorer()" plain size="small" :icon="btnIcon" :style="btnStyle">{{ btnTitle }}</el-button>
 
   </div>
 
@@ -60,8 +64,8 @@ export default {
       imagesPath: 'http://localhost:9000/content/img/uploads/',
       btnStyle: { width: "45px", height: '30px'},
       btnTitle: '',
+      btnIcon: '',
       dialogVisible: false,
-      imagesLoader: true,
       imagesAmount: 0,
       page: 1,
       itemsPerPage: 10,
@@ -76,15 +80,15 @@ export default {
     prepareBtn() {
       if(this.width) this.btnStyle.width = this.width
       if(this.height) this.btnStyle.height = this.height
-      this.btnStyle.background = `url("http://via.placeholder.com/${this.width.replace('px','')}x${this.height.replace('px','')}")`
+      this.btnTitle = this.title
+      if(!this.title) this.btnStyle.background = `url("http://via.placeholder.com/${this.width.replace('px','')}x${this.height.replace('px','')}")`
+      else this.btnIcon = "el-icon-picture"
     },
 
     /************** PREPARE BUTTON *****************/
 
     checkSuccess(response, file, fileList) {
-        //this.$refs.upload.clearFiles()
-        this.loadPhotos()
-        this.loadPages()
+        this.loadPages().then(resp => this.loadPhotos()).catch(err => this.loadPhotos())
         if(response.type && response.type == "error") this.$notify({title: this.translate('error'), message: resp.msg, type: 'error'})
         return false
     },
@@ -93,8 +97,7 @@ export default {
 
     loadExplorer() {
         this.dialogVisible = true
-        this.loadPhotos()
-        this.loadPages()
+        this.loadPages().then(resp => this.loadPhotos()).catch(err => this.loadPhotos())
     },
 
     /************************** LOAD PHOTOS *************************/
@@ -108,7 +111,10 @@ export default {
         const resp = response.data
         if(resp.type && resp.type == "error") this.$notify({title: this.translate('error'), message: resp.msg, type: 'error'})
         else {
-          resp.forEach(item => item.active = false)
+           resp.forEach(item => {
+             item.active = false
+             item.thumb = 'thumb_'+item.filename
+           })
            this.images = resp
            this.loading = false
          }
@@ -121,13 +127,20 @@ export default {
 
     loadPages: function() {
 
+      return new Promise((resolve, reject) => {
       imageService.count().then(response => {
-        if(response.data && response.data.type == "error") this.$notify({title: this.translate('error'), message: response.data.msg, type: 'error'})
+        if(response.data && response.data.type == "error") {
+           this.$notify({title: this.translate('error'), message: response.data.msg, type: 'error'})
+           reject(false)
+         }
         else {
+           resolve()
            this.imagesAmount = response
          }
       }).catch(err => {
+          reject(false)
           this.$notify({title: this.translate('error'), message: this.translate('couldntHandlePagination'), type: 'warning'})
+      })
       })
     },
 
@@ -146,7 +159,7 @@ export default {
         if(response.data && response.data.type == "error") this.$notify({title: this.translate('error'), message: response.data.msg, type: 'error'})
         else {
            this.images.splice(this.images.indexOf(img),1)
-           this.loadPages()
+           this.loadPages().then(resp => this.loadPhotos()).catch(err => this.loadPhotos())
          }
       }).catch(err => {
           this.$notify({title: this.translate('error'), message: this.translate('errorMsg'), type: 'warning'})
@@ -159,7 +172,7 @@ export default {
       imageService.removeImage(file.response.msg).then(response => {
         if(response.data && response.data.type == "error") this.$notify({title: this.translate('error'), message: response.data.msg, type: 'error'})
         else {
-           this.loadPages()
+           this.loadPages().then(resp => this.loadPhotos()).catch(err => this.loadPhotos())
          }
       }).catch(err => {
           this.$notify({title: this.translate('error'), message: this.translate('errorMsg'), type: 'warning'})
@@ -171,6 +184,15 @@ export default {
     chooseImage(img) {
       this.images.forEach(item => item.active = false)
       img.active = true
+      this.image = img
+    },
+
+    /*********************** HANDLE CLOSE *************************/
+
+    handleClose() {
+      if(!this.title) this.btnStyle.background = `url("${this.imagesPath}${this.image.filename}") center/cover`
+      this.dialogVisible = false
+      this.$emit('chosenImage', this.image)
     }
 
   },
@@ -185,14 +207,19 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.imageExplorer .el-button {
-}
+
 .el-upload-list__item {
   cursor: pointer;
 }
+
+.el-upload-list__item-thumbnail {
+  object-fit: cover;
+}
+
 .el-upload-list__item.active {
   border: 2px solid #67c23a;
   opacity: 0.6;
   transform: scale(0.9);
 }
+
 </style>

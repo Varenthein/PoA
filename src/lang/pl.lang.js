@@ -54,6 +54,7 @@ export const polish = {
   personalized: 'Personalizacja',
   param: 'Parametr',
   value: 'Wartość',
+  price: 'Cena',
 
   /* OPERATIONS */
   operations: 'Działania',
@@ -66,6 +67,7 @@ export const polish = {
   add: 'Dodaj',
   option: 'Opcja',
   browse: 'Przeglądaj',
+  choose: 'Wybierz',
 
   /* VALIDATION */
   validateNameIsRequired: 'Proszę podać nazwę produktu',

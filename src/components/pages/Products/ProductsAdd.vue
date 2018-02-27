@@ -67,12 +67,29 @@
         <!-- PERSONALIZATION -->
         <h4 v-lang.personalization></h4>
 
-        <image-explorer width="150px" height="150px" />
         <div class="option" v-for="option in product.options">
-          <el-input v-model="option.title"></el-input>
+          <el-input class="simple" v-model="option.title"></el-input>
           <el-button type="success" plain size="small" @click="addChoice(option)" style="float:right" icon="el-icon-plus">{{ translate('addChoice') }}</el-button>
           <el-button type="danger" @click="delOption(option)" style="float:right" plain size="small" icon="el-icon-close"></el-button>
 
+          <!-- choices -->
+          <ul>
+            <li v-for="choice in option.choices">
+              <el-form :inline="true">
+                <el-form-item label="">
+                  <el-input v-model="choice.param" style="width: 250px"></el-input>
+                </el-form-item>
+                <el-form-item label="">
+                   <el-tooltip class="item" effect="dark" :content="translate('price')" placement="top">
+                     <el-input type="number" min="0" style="width: 90px" v-model="choice.price"></el-input>
+                   </el-tooltip>
+                </el-form-item>
+                <el-form-item label="">
+                  <image-explorer width="45px" height="45px" v-on:chosenImage="choice.image = $event"/>
+                </el-form-item>
+              </el-form>
+            </li>
+          </ul>
         </div>
 
         <el-button type="success" plain size="small" @click="addOption()" icon="el-icon-plus">{{ translate('addOption') }}</el-button>
@@ -182,7 +199,7 @@ export default {
       confirmButtonText: this.translate('add'),
       cancelButtonText: this.translate('cancel'),
     }).then(value => {
-       this.product.options.push({ title: value.value, choices: ''})
+       this.product.options.push({ title: value.value, choices: []})
     }).catch(() => {
        //input cancelled
     });
@@ -197,12 +214,12 @@ export default {
   /***************************** ADD CHOICE ********************************/
 
   addChoice(option) {
-    this.$prompt(this.translate('choice'), this.translate('addOption'), {
+    this.$prompt(this.translate('name'), this.translate('addChoice'), {
      confirmButtonText: this.translate('add'),
      cancelButtonText: this.translate('cancel'),
    }).then(value => {
-      this.product.options.push({ title: value.value, choices: ''})
-   }).catch(() => {
+      option.choices.push({ param: value.value, price: 0, image: ''})
+   }).catch((err) => {
       //input cancelled
    });
  },
@@ -250,21 +267,38 @@ export default {
     border: dashed 2px #e6e6e6;
     padding: 10px;
     transition: .3s;
+    margin-bottom: 20px;
 }
 
 .option:hover {
     border: dashed 2px #aaa;
 }
 
-.option .el-input__inner {
-  border:none;
-  font-weight: bold;
+.option ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.option ul form::before {
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  margin: 0 7px 22px 7px;
+  background: #67c23a;
+  opacity: 0.8;
+  border-radius: 100%;
+}
+
+.option form {
+  display: flex;
+  align-items: center;
 }
 
 </style>
 
 <style>
-.option .el-input__inner {
+.option .simple .el-input__inner {
   border:none;
   font-weight: bold;
 }
