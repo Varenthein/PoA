@@ -95,7 +95,7 @@ export default {
       this.loading = true
       opinionService.acceptOpinion(id).then(response => {
         if(response.data && response.data.type == "error") {
-          this.$notify({title: this.translate('error'), message: response.data.msg, type: 'error'})
+          this.$message({title: this.translate('error'), message: response.data.msg, type: 'error'})
         }
         else {
            this.$message({title: this.translate('success'), message: response.data.msg, type: 'success'})
@@ -117,6 +117,7 @@ export default {
         }
         else {
            this.$message({title: this.translate('success'), message: response.data.msg, type: 'success'})
+           this.loadPages();
            this.loadOpinions()
          }
       }).catch(err => {

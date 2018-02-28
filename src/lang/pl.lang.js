@@ -113,6 +113,8 @@ export const polish = {
   addRequirement: 'Dodaj wymaganie',
   requirementDescPlaceholder: 'Opisz krótko czego oczekujesz  od klienta',
   noRequirements: 'Nie ustawiłeś jeszcze żadnych wymagań',
+  validationWentWrong: 'Niektóre pola w formularzu nie są wypełnione poprawnie',
+  clickNewChoice: 'Kliknij na "Nowy wybór", aby dodać możliwe ustawienie',
 
   /* MEDIA EXPLORER */
   choosePhoto: 'Wybierz zdjęcie',

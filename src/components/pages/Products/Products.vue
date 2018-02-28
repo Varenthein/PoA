@@ -118,6 +118,7 @@ export default {
               type: 'success',
               message: this.translate('productDeleted')
             });
+            this.loadPages()
             this.loadProducts()
           }
         }).catch(err => {

@@ -13,14 +13,14 @@
 
   <!-- FORM -->
 
-  <el-form :model="product" label-position="left" :rules="rules" ref="ruleForm" @submit.native.prevent label-width="120px">
+  <el-form :model="product" label-position="left" ref="productForm" @submit.native.prevent label-width="120px">
     <el-row>
       <el-col :span="12">
 
         <!-- BASIC DATA -->
         <h4 v-lang.basicInfo></h4>
 
-        <el-form-item :label="translate('name')" prop="name">
+        <el-form-item :rules="[{ required: true, message: this.translate('validateNameIsRequired'), trigger: 'blur' }, { min: 3, max: 100, message: this.translate('validateProdLength'), trigger: 'blur' }]" :label="translate('name')" prop="name">
           <el-input v-model="product.name"></el-input>
         </el-form-item>
 
@@ -64,37 +64,40 @@
         <div class="line"></div>
 
         <!-- PERSONALIZATION -->
-        <h4 v-lang.personalization></h4>
+        <div v-if="product.type" class="personalizationBox">
+          <h4 v-lang.personalization></h4>
 
-        <div class="option" v-for="option in product.options">
-          <el-input class="simple" v-model="option.title"></el-input>
-          <el-button type="success" plain size="small" @click="addChoice(option)" style="float:right" icon="el-icon-plus">{{ translate('addChoice') }}</el-button>
-          <el-button type="danger" @click="delOption(option)" style="float:right" plain size="small" icon="el-icon-close"></el-button>
+            <div class="option" v-for="option in product.options">
+                <el-input class="simple" v-model="option.title"></el-input>
+                <el-button type="success" plain size="small" @click="addChoice(option)" style="float:right" icon="el-icon-plus">{{ translate('addChoice') }}</el-button>
+                <el-button type="danger" @click="delOption(option)" style="float:right" plain size="small" icon="el-icon-close"></el-button>
 
-          <!-- choices -->
-          <ul>
-            <li v-for="choice in option.choices">
-              <el-form :inline="true">
-                <el-form-item label="">
-                  <el-tooltip class="item" effect="dark" :content="translate('name')" placement="top">
-                    <el-input v-model="choice.param" style="width: 230px"></el-input>
-                  </el-tooltip>
-                </el-form-item>
-                <el-form-item label="">
-                  <el-tooltip class="item" effect="dark" :content="translate('price')" placement="top">
-                    <el-input type="number" min="0" style="width: 90px" v-model="choice.price"></el-input>
-                  </el-tooltip>
-                </el-form-item>
-                <el-form-item label="">
-                  <image-explorer width="45px" height="45px" v-on:chosenImage="choice.image = $event" />
-                </el-form-item>
-              </el-form>
-            </li>
-          </ul>
-        </div>
+                <!-- choices -->
+                <ul>
+                    <li v-for="choice in option.choices">
+                        <el-form :inline="true">
+                          <el-form-item label="">
+                            <el-tooltip class="item" effect="dark" :content="translate('name')" placement="top">
+                              <el-input v-model="choice.param" style="width: 230px"></el-input>
+                            </el-tooltip>
+                          </el-form-item>
+                          <el-form-item label="">
+                            <el-tooltip class="item" effect="dark" :content="translate('price')" placement="top">
+                              <el-input type="number" min="0" style="width: 90px" v-model="choice.price"></el-input>
+                            </el-tooltip>
+                          </el-form-item>
+                          <el-form-item label="">
+                            <image-explorer width="45px" height="45px" v-on:chosenImage="choice.image = $event" />
+                          </el-form-item>
+                        </el-form>
+                    </li>
+                </ul>
+                <p class="text-muted text-smaller" v-if="!option.choices.length" style="margin-left: 15px" v-lang.clickNewChoice></p>
+            </div>
 
-        <el-button type="success" plain size="small" @click="addOption()" icon="el-icon-plus">{{ translate('addOption') }}</el-button>
-        <div class="line"></div>
+            <el-button type="success" plain size="small" @click="addOption()" icon="el-icon-plus">{{ translate('addOption') }}</el-button>
+            <div class="line"></div>
+      </div>
 
       </el-col>
       <el-col :span="12">
@@ -130,7 +133,7 @@
         <!-- DESCRIPTION -->
         <div class="longDesc">
             <h4 v-lang.longDesc></h4>
-            <medium-editor :text='product.description' class="mEditor" options="{toolbar: {buttons: ['bold', 'italic', 'underline', 'anchor', 'h2', 'h3', 'quote']}}" custom-tag='div' v-on:edit='updateDesc'></medium-editor>
+            <medium-editor :text='product.description' class="mEditor" :options="editorOptions" custom-tag='div' v-on:edit='updateDesc'></medium-editor>
         </div>
         <div class="line"></div>
 
@@ -144,13 +147,13 @@
                 <strong>{{ req.name }}:</strong>
                 <el-radio v-model="req.type" label="text">{{ translate('text')}}</el-radio>
                 <el-radio v-model="req.type" label="file">{{ translate('file')}}</el-radio>
+                <i style="float: right" class="el-icon-close el-button--danger is-plain" @click="delRequirement(req)"></i>
                 <el-checkbox style="float: right" v-model="req.required">{{ translate('required') }}</el-checkbox>
                 <el-collapse>
                   <el-collapse-item :title="translate('desc')">
-                      <el-input type="textarea" :placeholder="translate('requirementDescPlaceholder')" v-model="product.short_description"></el-input>
+                      <el-input type="textarea" :placeholder="translate('requirementDescPlaceholder')" v-model="req.desc"></el-input>
                   </el-collapse-item>
                 </el-collapse>
-                <el-button type="danger" @click="delRequirement(req)" style="" plain size="mini" icon="el-icon-close"></el-button>
               </li>
             </ul>
         </div>
@@ -158,7 +161,7 @@
 
       </el-col>
     </el-row>
-    <el-button type="success" size="small" icon="el-icon-plus">{{ translate('addProduct') }}</el-button>
+    <el-button type="success" size="small" @click="addProduct" icon="el-icon-plus">{{ translate('addProduct') }}</el-button>
   </el-form>
 
 
@@ -201,14 +204,11 @@ export default {
         requirements: [],
         personalization: ''
       },
-      rules: {}
+      rules: [],
+      editorOptions: ''
     }
   },
   methods: {
-
-    processEditOperation: function (operation) {
-          this.text = operation.api.origElements.innerHTML
-        },
 
     /***************************** PREAPRE FORM ********************************/
 
@@ -221,20 +221,21 @@ export default {
         })
         else {
           this.categories = response.data
-          this.rules = {
-            name: [{
+          this.rules = [{
                 required: true,
                 message: this.translate('validateNameIsRequired'),
-                trigger: 'change'
+                trigger: 'blur'
               },
               {
                 min: 3,
                 max: 100,
                 message: this.translate('validateProdLength'),
-                trigger: 'change'
+                trigger: 'blur'
               }
             ]
-          }
+
+          this.$refs['productForm'].resetFields();
+          this.editorOptions = { placeholder: { text: this.translate('longDescPlaceholder') }, toolbar: {buttons: ['bold', 'italic', 'underline', 'anchor', 'h2', 'h3', 'quote']}}
           this.loading = false
         }
       }).catch(err => {
@@ -354,6 +355,50 @@ export default {
       this.product.requirements.splice(this.product.requirements.indexOf(req), 1)
     },
 
+    /***************************** ADD PRODUCT ********************************/
+
+    addProduct() {
+      this.$refs['productForm'].validate((valid) => {
+          if (valid) {
+
+            this.loading = true;
+            let product = Object.assign({}, this.product);
+
+            product.categories = JSON.stringify(product.categories.map(item => { return item.id} ))
+            product.photos = JSON.stringify(product.photos.map(item => { return item.id} ))
+            product.technical_data = JSON.stringify(product.technical_data)
+            if(product.options.length) {
+              product.options.forEach(option => {
+                if(option.choices) {
+                  option.choices.forEach(choice => {
+                    if(choice.image != '') choice.image = choice.image.id
+                  })
+                }
+              })
+            }
+            product.options = JSON.stringify(product.options)
+            product.requirements = JSON.stringify(product.requirements)
+
+            productService.addProduct(product).then(response => {
+                if(response.data && response.data.type == "error") {
+                  let errors = Object.values(response.data.msg)
+                  errors = this.translate('validationWentWrong') + errors.reduce((sum, item) => sum+'<li>'+item+'</li>', '<ul>') + '</ul>'
+                  this.$message({title: this.translate('error'), message: errors, type: 'warning', dangerouslyUseHTMLString: true})
+                }
+                else if(response.data && response.data.type == "success") this.$message({title: this.translate('success'), message: response.data.msg, type: 'success'})
+                else this.$message.error(this.translate('errorMsg'));
+                this.loading = false
+            }).catch(err => {
+                this.$message.error(this.translate('errorMsg'))
+                this.loading = false
+            })
+
+          } else {
+            this.$message.error(this.translate('validationWentWrong'))
+            return false;
+          }
+        });
+    }
 
   },
   created: function() {
@@ -430,6 +475,15 @@ export default {
 
 .requiredInfo ul li  strong {
   margin-right: 30px;
+}
+
+.requiredInfo .el-icon-close {
+  padding: 4px;
+  border: 1px solid #f56c6c;
+  border-radius: 3px;
+  font-size: 0.8em;
+  margin: 0 5px 0 50px;
+  cursor: pointer;
 }
 
 .option ul form::before, .requiredInfo ul li::before {

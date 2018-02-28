@@ -23,10 +23,16 @@ export const productService = {
       return api.get('/product/range/'+limit_from+'/'+limit_to)
   },
 
-  /********** REMOVE OPINION ************/
+  /********** REMOVE PRODUCT ************/
 
   removeProduct: (id) => {
       return api.delete('/product/remove/'+id)
+  },
+
+  /********** ADD PRODUCT ************/
+
+  addProduct: (data) => {
+      return api.post('/product/add', data)
   }
 
 
