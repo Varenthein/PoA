@@ -14,7 +14,7 @@
            </el-menu-item>
        </template>
        <el-menu-item index="logout">
-           <a v-lang.logout href="/api/auth/logout/"></a>
+           <a v-lang.logout href="/api/auth/logout"></a>
        </el-menu-item>
      </el-menu>
   </div>
