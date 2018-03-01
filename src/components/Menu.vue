@@ -62,7 +62,7 @@ export default {
       { title: this.translate('products'), perm: 'seeProduct', pathTo: '/products', subMenu: [
         { title: this.translate('allProducts'), perm: 'seeProduct', pathTo: '/products', subMenu: false },
         { title: this.translate('addProduct'), perm: 'addProduct', pathTo: '/products/add', subMenu: false },
-        { title: this.translate('categories'), pathTo: 'Categories', subMenu: false }
+        { title: this.translate('categories'), perm: 'seeCategory', pathTo: '/categories', subMenu: false }
       ]},
       { title: this.translate('orders'), pathTo: 'Orders', subMenu: false},
       { title: this.translate('users'), pathTo: 'users', subMenu: [

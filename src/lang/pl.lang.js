@@ -118,6 +118,10 @@ export const polish = {
   clickNewChoice: 'Kliknij na "Nowy wybór", aby dodać możliwe ustawienie',
   productNotExists: 'Produkt nie istnieje! Za chwilę zostaniesz przekeirowany do podstrony z produktami',
 
+  /*CATEGORIES */
+  removeCategoryConfirmation: 'Ta operacja na zawsze usunie daną kategorię. Chcesz kontynuować?',
+  categoryDeleted: 'Kategoria została usunięta',
+  
   /* MEDIA EXPLORER */
   choosePhoto: 'Wybierz zdjęcie',
   couldntLoadImages: 'Nie udało się załadować zdjęć',

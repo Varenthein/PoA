@@ -23,7 +23,7 @@ export const productService = {
       return api.get('/product/range/'+limit_from+'/'+limit_to)
   },
 
-  /********** GET PRODUCTS WITHING RANGE ************/
+  /********** GET PRODUCTS BY ID ************/
 
   getById: (id) => {
       return api.get('/product/id/'+id)

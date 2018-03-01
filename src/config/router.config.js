@@ -5,6 +5,7 @@ import Opinions from '@/components/pages/Opinions/Opinions'
 import Products from '@/components/pages/Products/Products'
 import ProductsAdd from '@/components/pages/Products/ProductsAdd'
 import ProductsEdit from '@/components/pages/Products/ProductsEdit'
+import Categories from '@/components/pages/Categories/Categories'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/products/edit/:id',
       name: 'ProductsEdit',
       component: ProductsEdit
+    },
+    {
+      path: '/categories',
+      name: 'Categories',
+      component: Categories
     },
     {
       path: '/opinions',

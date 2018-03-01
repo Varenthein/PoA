@@ -1,30 +1,30 @@
 <template>
 
-  <div class="products" v-loading="loading">
+  <div class="categories" v-loading="loading">
 
     <!-- BREADCUMB -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item><span v-lang.shopcms></span></el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/products' }"><span v-lang.products></span></el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/categories' }"><span v-lang.categories></span></el-breadcrumb-item>
     </el-breadcrumb>
 
     <!-- TITLE -->
-    <h2 class="title" v-lang.products></h2>
+    <h2 class="title" v-lang.categories></h2>
 
-    <!-- ADD PRODUCT BTN -->
-    <router-link to="/products/add"><el-button type="success" v-if="userCan('addProduct')" class="addProductBtn" plain size="small" icon="el-icon-plus">{{ translate('addProduct') }}</el-button>
+    <!-- ADD CATEGORY BTN -->
+    <router-link to="/categories/add"><el-button type="success" v-if="userCan('addCategory')" class="addCategoryBtn" plain size="small" icon="el-icon-plus">{{ translate('addCategory') }}</el-button>
     </router-link>
 
-    <!-- PRODUCTS BOX -->
-    <el-table :default-sort = "{prop: 'id', order: 'ascending'}" :empty-text="translate('noData')" v-loading="loading" :data="products" stripe style="width: 100%">
+    <!-- CATEGORY BOX -->
+    <el-table :default-sort = "{prop: 'id', order: 'ascending'}" :empty-text="translate('noData')" v-loading="loading" :data="categories" stripe style="width: 100%">
       <el-table-column :sortable="true" type="index" :index="indexMethod">
       </el-table-column>
-      <el-table-column prop="name" :sortable="true" :label="translate('product')" width="670">
+      <el-table-column prop="name" :sortable="true" :label="translate('name')" width="670">
       </el-table-column>
       <el-table-column :label="translate('operations')" width="200">
         <template slot-scope="scope">
-          <el-button type="warning" v-if="userCan('editProduct')" @click="editProduct(scope.row.id)" plain size="small" icon="el-icon-edit">{{ translate('edit') }}</el-button>
-          <el-button type="danger" v-if="userCan('removeProduct')" @click="removeProduct(scope.row.id)" plain size="small" icon="el-icon-close">{{ translate('remove') }}</el-button>
+          <el-button type="warning" v-if="userCan('editCategory')" @click="editCategory(scope.row.id)" plain size="small" icon="el-icon-edit">{{ translate('edit') }}</el-button>
+          <el-button type="danger" v-if="userCan('removeCategory')" @click="removeCategory(scope.row.id)" plain size="small" icon="el-icon-close">{{ translate('remove') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -32,7 +32,7 @@
 
     <!-- PAGINATION -->
     <div class="block">
-      <el-pagination @current-change="handlePageChange" :currentPage="page" layout="prev, pager, next" :total="productsAmount">
+      <el-pagination @current-change="handlePageChange" :currentPage="page" layout="prev, pager, next" :total="categoriesAmount">
       </el-pagination>
     </div>
 
@@ -44,40 +44,40 @@
 
 /* IMPORT SERVICES */
 import { userService, userMixin } from '@/services/user.service.js'
-import { productService } from '@/services/product.service.js'
+import { categoryService } from '@/services/category.service.js'
 
 
 export default {
-  name: 'Products',
+  name: 'Categories',
   mixins: [userMixin],
   data () {
     return {
-      productsAmount: 0,
+      categoriesAmount: 0,
       page: 1,
       itemsPerPage: 10,
       loading: true,
-      products: [],
+      categories: [],
       indexMethod: 1
     }
   },
   methods: {
 
-    /************************** LOAD PRODUCTS *************************/
+    /************************** LOAD CATEGORIES *************************/
 
-    loadProducts: function() {
+    loadCategories: function() {
 
       const limit_from = (this.page-1)*10
       const limit_to = this.page*10
 
-      productService.getProductsRange(limit_from, limit_to).then(response => {
+      categoryService.getCategoriesRange(limit_from, limit_to).then(response => {
         const resp = response.data
         if(resp.type && resp.type == "error") this.$notify({title: this.translate('error'), message: resp.msg, type: 'error'})
         else {
-           this.products = resp
+           this.categories = resp
            this.loading = false
          }
       }).catch(err => {
-          this.$notify({title: this.translate('error'), message: this.translate('couldntLoadProducts'), type: 'warning'})
+          this.$notify({title: this.translate('error'), message: this.translate('couldntLoadCategories'), type: 'warning'})
       })
     },
 
@@ -85,10 +85,10 @@ export default {
 
     loadPages: function() {
 
-      productService.count().then(response => {
+      categoryService.count().then(response => {
         if(response.data && response.data.type == "error") this.$notify({title: this.translate('error'), message: response.data.msg, type: 'error'})
         else {
-           this.productsAmount = response
+           this.categoriesAmount = response
          }
       }).catch(err => {
           this.$notify({title: this.translate('error'), message: this.translate('couldntHandlePagination'), type: 'warning'})
@@ -100,37 +100,37 @@ export default {
     handlePageChange: function(val) {
         this.page = val
         this.loading = true
-        this.loadProducts()
+        this.loadCategories()
     },
 
-    /************************** REMOVE PRODUCT  *************************/
+    /************************** REMOVE CATEGORY *************************/
 
-    removeProduct: function(id) {
-      this.$confirm(this.translate('removeProductConfirmation'), 'Warning', {
+    removeCategory: function(id) {
+      this.$confirm(this.translate('removeCategoryConfirmation'), 'Warning', {
         confirmButtonText: this.translate('yes'),
         cancelButtonText: this.translate('cancel'),
         type: 'warning'
       }).then(() => {
-        productService.removeProduct(id).then(response => {
+        categoryService.removeCategory(id).then(response => {
           if(response.data && response.data.type == "error") this.$notify({title: this.translate('error'), message: response.data.msg, type: 'error'})
           else if(response.data && response.data.type == "success") {
             this.$message({ type: 'success', message: response.data.msg});
             this.loadPages()
-            this.loadProducts()
+            this.loadCategories()
           } else throw "error"
         }).catch(err => {
             this.$notify({title: this.translate('error'), message: this.translate('accessDeniedMsg'), type: 'warning'})
         })
 
-     }).catch(() => {
+     }).catch((err) => {
        //removing canceled
      });
    },
 
-   /************************** EDIT PRODUCT  *************************/
+   /************************** EDIT CATEGORY  *************************/
 
-   editProduct: function(id) {
-        this.$router.push({ path: '/products/edit/'+id })
+   editCategory: function(id) {
+        this.$router.push({ path: '/category/edit/'+id })
   }
 
 
@@ -138,10 +138,10 @@ export default {
   created: function() {
 
       this.signIn().then(user => {
-          if(!this.userCan('seeProduct')) this.getOut();
+          if(!this.userCan('seeCategory')) this.getOut();
 
           //load products
-          this.loadProducts();
+          this.loadCategories();
 
           //load pages amount
           this.loadPages();
@@ -159,7 +159,7 @@ export default {
   display: inline-block;
 }
 
-.addProductBtn {
+.addCategoryBtn {
   margin-top: 10px;
   float: right;
 }
