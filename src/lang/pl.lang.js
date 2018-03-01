@@ -72,6 +72,7 @@ export const polish = {
   option: 'Opcja',
   browse: 'Przeglądaj',
   choose: 'Wybierz',
+  editProduct: 'Edytuj produkt',
 
   /* VALIDATION */
   validateNameIsRequired: 'Proszę podać nazwę produktu',
@@ -115,6 +116,7 @@ export const polish = {
   noRequirements: 'Nie ustawiłeś jeszcze żadnych wymagań',
   validationWentWrong: 'Niektóre pola w formularzu nie są wypełnione poprawnie',
   clickNewChoice: 'Kliknij na "Nowy wybór", aby dodać możliwe ustawienie',
+  productNotExists: 'Produkt nie istnieje! Za chwilę zostaniesz przekeirowany do podstrony z produktami',
 
   /* MEDIA EXPLORER */
   choosePhoto: 'Wybierz zdjęcie',

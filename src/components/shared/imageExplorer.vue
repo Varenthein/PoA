@@ -57,7 +57,8 @@ export default {
   props: {
     width: String,
     height: String,
-    title: String
+    title: String,
+    thumb: String
   },
   data () {
     return {
@@ -81,7 +82,8 @@ export default {
       if(this.width) this.btnStyle.width = this.width
       if(this.height) this.btnStyle.height = this.height
       this.btnTitle = this.title
-      if(!this.title) this.btnStyle.background = `url("http://via.placeholder.com/${this.width.replace('px','')}x${this.height.replace('px','')}")`
+      if(this.thumb) this.btnStyle.background = `url("${this.thumb}") center/cover`
+      else if(!this.title) this.btnStyle.background = `url("http://via.placeholder.com/${this.width.replace('px','')}x${this.height.replace('px','')}")`
       else this.btnIcon = "el-icon-picture"
     },
 

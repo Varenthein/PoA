@@ -23,6 +23,12 @@ export const productService = {
       return api.get('/product/range/'+limit_from+'/'+limit_to)
   },
 
+  /********** GET PRODUCTS WITHING RANGE ************/
+
+  getById: (id) => {
+      return api.get('/product/id/'+id)
+  },
+
   /********** REMOVE PRODUCT ************/
 
   removeProduct: (id) => {
@@ -33,6 +39,12 @@ export const productService = {
 
   addProduct: (data) => {
       return api.post('/product/add', data)
+  },
+
+  /********** ADD PRODUCT ************/
+
+  editProduct: (id, data) => {
+      return api.post('/product/edit/'+id, data)
   }
 
 

@@ -16,14 +16,14 @@
     </router-link>
 
     <!-- PRODUCTS BOX -->
-    <el-table :default-sort = "{prop: 'name', order: 'ascending'}" :empty-text="translate('noData')" v-loading="loading" :data="products" stripe style="width: 100%">
-      <el-table-column type="index" :index="indexMethod">
+    <el-table :default-sort = "{prop: 'id', order: 'ascending'}" :empty-text="translate('noData')" v-loading="loading" :data="products" stripe style="width: 100%">
+      <el-table-column :sortable="true" type="index" :index="indexMethod">
       </el-table-column>
-      <el-table-column prop="name" :label="translate('product')" width="670">
+      <el-table-column prop="name" :sortable="true" :label="translate('product')" width="670">
       </el-table-column>
       <el-table-column :label="translate('operations')" width="200">
         <template slot-scope="scope">
-          <el-button type="warning" v-if="userCan('acceptOpinion')" @click="acceptOpinion(scope.row.id)" plain size="small" icon="el-icon-edit">{{ translate('edit') }}</el-button>
+          <el-button type="warning" v-if="userCan('acceptOpinion')" @click="editProduct(scope.row.id)" plain size="small" icon="el-icon-edit">{{ translate('edit') }}</el-button>
           <el-button type="danger" v-if="userCan('removeProduct')" @click="removeProduct(scope.row.id)" plain size="small" icon="el-icon-close">{{ translate('remove') }}</el-button>
         </template>
       </el-table-column>
@@ -128,7 +128,13 @@ export default {
      }).catch(() => {
        //removing canceled
      });
-   }
+   },
+
+   /************************** EDIT PRODUCT  *************************/
+
+   editProduct: function(id) {
+        this.$router.push({ path: '/products/edit/'+id })
+  }
 
 
   },
