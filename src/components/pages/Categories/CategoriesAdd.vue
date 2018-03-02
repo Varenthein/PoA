@@ -123,7 +123,7 @@ export default {
   float: right;
 }
 
-.el-input {
+.el-input, .el-textarea {
   max-width: 250px;
 }
 
