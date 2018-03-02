@@ -141,20 +141,3 @@ export default {
 }
 
 </style>
-
-<style>
-.option .simple.el-input {
-  max-width: 200px;
-}
-
-.option .simple .el-input__inner {
-  max-width: 200px;
-  border: none;
-  font-weight: bold;
-}
-
-.mEditor p:first-child {
-  margin-top: 0;
-}
-
-</style>
