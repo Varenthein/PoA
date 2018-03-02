@@ -15,7 +15,6 @@
 
   <el-form :model="category" label-position="left" ref="categoryForm" @submit.native.prevent label-width="120px">
 
-
         <!-- name -->
         <el-form-item :rules="[{ required: true, message: this.translate('validateNameIsRequired'), trigger: 'blur' }, { min: 3, max: 100, message: this.translate('validateCatLength'), trigger: 'blur' }, { pattern: /^([0-9a-zÀÁÂÃÄÅĄÇÈÉÊËĘÌÍÎÏÒÓÓÔÕÖßÙÚÛÜÝàąáâãäåçèéęêëìíîïłðòóóôõöùúûüýÿ()\s])+$/i, message: this.translate('validateAlphaSpaceNumbers')}]" :label="translate('name')" prop="name">
           <el-input v-model="category.name"></el-input>

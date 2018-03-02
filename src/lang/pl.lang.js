@@ -7,6 +7,7 @@ export const polish = {
   noData: 'Brak danych',
   accept: 'Akceptuj',
   reject: 'Odrzuć',
+  today: 'Dzisiaj',
 
   /* MENU */
   logout: 'Wyloguj',
@@ -60,6 +61,7 @@ export const polish = {
   required: 'Wymagane',
   desc: 'Opis',
   icon: 'Ikona',
+  status: 'Status',
 
   /* OPERATIONS */
   operations: 'Działania',
@@ -74,6 +76,7 @@ export const polish = {
   browse: 'Przeglądaj',
   choose: 'Wybierz',
   editProduct: 'Edytuj produkt',
+  show: 'Pokaż',
 
   /* VALIDATION */
   validateNameIsRequired: 'Proszę podać nazwę produktu',
@@ -128,6 +131,13 @@ export const polish = {
   categoryDeleted: 'Kategoria została usunięta',
   chooseIcon: 'Wybierz ikonę',
   categoryNotExists: 'Wybrana kategoria nie istnieje!',
+
+  /* ORDERS */
+  orderStatus0: 'Przyjęto',
+  orderStatus1: 'W realizacji',
+  orderStatus2: 'Zakończono',
+  editOrderStatus: 'Edytuj status zamówienia',
+  removeOrderConfirmation: 'Ta operacja na zawsze usunie dane zamówienie. Chcesz kontynuować?',
 
   /* MEDIA EXPLORER */
   choosePhoto: 'Wybierz zdjęcie',

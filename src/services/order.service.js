@@ -19,7 +19,24 @@ export const orderService = {
 
   getAwaitingOrders: () => {
     return api.get('/order/awaiting')
-  }
+  },
 
+  /********** GET ORDERS WITHING RANGE ************/
+
+  getOrdersRange: (limit_from, limit_to) => {
+      return api.get('/order/range/'+limit_from+'/'+limit_to)
+  },
+
+  /********** CHANGE ORDER STATUS ************/
+
+  changeStatus: (data) => {
+      return api.post('/order/status', data)
+  },
+
+  /********** REMOVE ORDER ************/
+
+  removeOrder: (id) => {
+      return api.delete('/order/remove/'+id)
+  }
 
 }
