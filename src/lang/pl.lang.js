@@ -59,6 +59,7 @@ export const polish = {
   file: 'Plik',
   required: 'Wymagane',
   desc: 'Opis',
+  icon: 'Ikona',
 
   /* OPERATIONS */
   operations: 'Działania',
@@ -77,6 +78,9 @@ export const polish = {
   /* VALIDATION */
   validateNameIsRequired: 'Proszę podać nazwę produktu',
   validateProdLength: 'Długość musi mieścić się w przedziale (3-100)',
+  validateCatLength: 'Długość musi mieścić się w przedziale (3-100)',
+  validateAlphaSpace: 'Używasz nieprawidłowych znaków! Tylko litery i spacje są wspierane',
+  validateAlphaSpaceNumbers: 'Używasz nieprawidłowych znaków! Używaj tylko [0-9, a-Z]', 
 
   /* HOME */
   productsTwisted: 'produktów',
@@ -121,7 +125,8 @@ export const polish = {
   /*CATEGORIES */
   removeCategoryConfirmation: 'Ta operacja na zawsze usunie daną kategorię. Chcesz kontynuować?',
   categoryDeleted: 'Kategoria została usunięta',
-  
+  chooseIcon: 'Wybierz ikonę',
+
   /* MEDIA EXPLORER */
   choosePhoto: 'Wybierz zdjęcie',
   couldntLoadImages: 'Nie udało się załadować zdjęć',

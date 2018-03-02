@@ -4,39 +4,37 @@
   <!-- BREADCUMB -->
   <el-breadcrumb separator-class="el-icon-arrow-right">
     <el-breadcrumb-item><span v-lang.shopcms></span></el-breadcrumb-item>
-    <el-breadcrumb-item :to="{ path: '/products' }"><span v-lang.products></span></el-breadcrumb-item>
-    <el-breadcrumb-item :to="{ path: '/products/add' }"><span v-lang.addProduct></span></el-breadcrumb-item>
+    <el-breadcrumb-item :to="{ path: '/categories' }"><span v-lang.categories></span></el-breadcrumb-item>
+    <el-breadcrumb-item :to="{ path: '/products/add' }"><span v-lang.addCategory></span></el-breadcrumb-item>
   </el-breadcrumb>
 
   <!-- TITLE -->
-  <h2 class="title" v-lang.addProduct></h2>
+  <h2 class="title" v-lang.addCategory></h2>
 
   <!-- FORM -->
 
   <el-form :model="category" label-position="left" ref="categoryForm" @submit.native.prevent label-width="120px">
 
-        <!-- BASIC DATA -->
         <h4 v-lang.basicInfo></h4>
 
-        <el-form-item :rules="[{ required: true, message: this.translate('validateNameIsRequired'), trigger: 'blur' }, { min: 3, max: 100, message: this.translate('validateProdLength'), trigger: 'blur' }]" :label="translate('name')" prop="name">
-          <el-input v-model="product.name"></el-input>
+        <!-- name -->
+        <el-form-item :rules="[{ required: true, message: this.translate('validateNameIsRequired'), trigger: 'blur' }, { min: 3, max: 100, message: this.translate('validateCatLength'), trigger: 'blur' }, { pattern: /^([0-9a-zÀÁÂÃÄÅĄÇÈÉÊËĘÌÍÎÏÒÓÓÔÕÖßÙÚÛÜÝàąáâãäåçèéęêëìíîïłðòóóôõöùúûüýÿ()\s])+$/i, message: this.translate('validateAlphaSpaceNumbers')}]" :label="translate('name')" prop="name">
+          <el-input v-model="category.name"></el-input>
         </el-form-item>
 
-        <el-form-item :label="translate('categories')" prop="categories">
-          <el-select :placeholder="translate('addCategory')" @change="addCat()" v-model="category">
-            <el-option v-for="cat in categories" :label="cat.name" :value="cat"></el-option>
+        <!-- icons -->
+        <el-form-item :label="translate('icon')" prop="icon">
+          <el-select :placeholder="translate('chooseIcon')" v-model="category.icon">
+            <el-option v-for="icon in icons" :label="icon" :value="icon"><i :class="'icon fa '+icon"></i> {{ icon }}</el-option>
           </el-select>
-          <div>
-            <el-tag v-for="cat in product.categories" :key="cat.name" closable type="" @close="delCat(cat)" size="small"> {{cat.name}}</el-tag>
-          </div>
         </el-form-item>
 
-        <div class="shortDesc">
-            <h4 v-lang.shortDesc></h4>
-            <el-input type="textarea" :placeholder="translate('shortDescPlaceholder')" v-model="product.short_description"></el-input>
-        </div>
+        <!-- description -->
+        <el-form-item :label="translate('desc')" prop="description">
+            <el-input type="textarea" v-model="category.description"></el-input>
+        </el-form-item>
 
-        <el-button type="success" size="small" @click="addProduct" icon="el-icon-plus">{{ translate('addProduct') }}</el-button>
+        <el-button type="success" size="small" @click="addCategory" icon="el-icon-plus">{{ translate('addCategory') }}</el-button>
   </el-form>
 
 
@@ -44,9 +42,13 @@
 </template>
 
 <script>
+
 /* IMPORT SERVICES */
 import { userService, userMixin } from '@/services/user.service.js'
 import { categoryService} from '@/services/category.service.js'
+
+/* IMPORT FONTS */
+import 'font-awesome/css/font-awesome.css';
 
 export default {
   name: 'CategoriesAdd',
@@ -64,6 +66,33 @@ export default {
   },
   methods: {
 
+    /****************************** ADD CATEGORY ********************************/
+
+    addCategory() {
+
+      this.loading = true
+
+      categoryService.addCategory(this.category).then(response => {
+
+          if(response.data && response.data.type == "error") {
+
+              //prepare errors array and notify about them
+              let errors = Object.values(response.data.msg)
+              errors = this.translate('validationWentWrong') + errors.reduce((sum, item) => sum+'<li>'+item+'</li>', '<ul>') + '</ul>'
+              this.$message({title: this.translate('error'), message: errors, type: 'warning', dangerouslyUseHTMLString: true})
+
+          }
+          else if(response.data && response.data.type == "success") this.$message({title: this.translate('success'), message: response.data.msg, type: 'success'})
+          else this.$message.error(this.translate('errorMsg'));
+
+          this.loading = false
+
+      }).catch(err => {
+          this.$message.error(this.translate('errorMsg'))
+          this.loading = false
+      })
+    }
+
   },
   created: function() {
 
@@ -71,27 +100,25 @@ export default {
 
       if (!this.userCan('addCategory')) this.getOut();
 
-      this.prepareForm();
+        //this.prepareForm();
+        this.loading = false
 
     })
 
   },
   components: {
-    imageExplorer: imageExplorer, 'medium-editor': editor
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.productsAdd .el-col:first-child {
-  padding-right: 30px;
-}
+
 .title {
   display: inline-block;
 }
 
-.addProductBtn {
+.addCategoryBtn {
   margin-top: 10px;
   float: right;
 }
@@ -109,85 +136,8 @@ export default {
   margin-right: 5px;
 }
 
-.option {
-  border: dashed 2px #e6e6e6;
-  padding: 10px;
-  transition: .3s;
-  margin-bottom: 20px;
-}
-
-.option:hover {
-  border: dashed 2px #aaa;
-}
-
-.option ul, .requiredInfo ul {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-.requiredInfo ul li {
-  border-bottom: dashed 1px #ccc;
-  margin: 0px 0 5px 0px;
-  padding: 10px 0;
-}
-
-.requiredInfo ul li .el-collapse {
-  margin-top: 5px;
-  margin-left: 25px;
-  border-top: none;
-}
-
-.requiredInfo ul li  strong {
-  margin-right: 30px;
-}
-
-.requiredInfo .el-icon-close {
-  padding: 4px;
-  border: 1px solid #f56c6c;
-  border-radius: 3px;
-  font-size: 0.8em;
-  margin: 0 5px 0 50px;
-  cursor: pointer;
-}
-
-.option ul form::before, .requiredInfo ul li::before {
-  content: "";
-  display: block;
-  width: 10px;
-  height: 10px;
-  margin: 0 7px 22px 7px;
-  background: #67c23a;
-  opacity: 0.8;
-  border-radius: 100%;
-}
-
-.requiredInfo ul li::before {
-  display: inline-block;
-  margin: 0px 8px;
-}
-
-.option form {
-  display: flex;
-  align-items: center;
-}
-
-.shortDesc textarea {
-  height: 200px;
-}
-
-/* MEDIUM EDITOR */
-
-.mEditor {
-  min-height: 200px;
-  border: dashed 2px #e6e6e6;
-  transition: .3s;
-  outline: none;
-  padding: 20px;
-}
-
-.mEditor:hover, .mEditor:active {
-  border: dashed 2px #aaa;
-  outline: none;
+.icon {
+  margin-right: 10px;
 }
 
 </style>

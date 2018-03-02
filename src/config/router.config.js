@@ -6,7 +6,7 @@ import Products from '@/components/pages/Products/Products'
 import ProductsAdd from '@/components/pages/Products/ProductsAdd'
 import ProductsEdit from '@/components/pages/Products/ProductsEdit'
 import Categories from '@/components/pages/Categories/Categories'
-import CatagoriesAdd from '@/components/pages/Categories/CategoriesAdd'
+import CategoriesAdd from '@/components/pages/Categories/CategoriesAdd'
 
 Vue.use(Router)
 
