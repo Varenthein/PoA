@@ -7,6 +7,8 @@ import ProductsAdd from '@/components/pages/Products/ProductsAdd'
 import ProductsEdit from '@/components/pages/Products/ProductsEdit'
 import Categories from '@/components/pages/Categories/Categories'
 import CategoriesAdd from '@/components/pages/Categories/CategoriesAdd'
+import CategoriesEdit from '@/components/pages/Categories/CategoriesEdit'
+import Orders from '@/components/pages/Orders/Orders'
 
 Vue.use(Router)
 
@@ -46,6 +48,16 @@ export default new Router({
       path: '/categories/add',
       name: 'CategoriesAdd',
       component: CategoriesAdd
+    },
+    {
+      path: '/categories/edit/:id',
+      name: 'CategoriesEdit',
+      component: CategoriesEdit
+    },
+    {
+      path: '/orders',
+      name: 'Orders',
+      component: Orders
     },
     {
       path: '/opinions',

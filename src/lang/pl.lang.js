@@ -80,7 +80,7 @@ export const polish = {
   validateProdLength: 'Długość musi mieścić się w przedziale (3-100)',
   validateCatLength: 'Długość musi mieścić się w przedziale (3-100)',
   validateAlphaSpace: 'Używasz nieprawidłowych znaków! Tylko litery i spacje są wspierane',
-  validateAlphaSpaceNumbers: 'Używasz nieprawidłowych znaków! Używaj tylko [0-9, a-Z]', 
+  validateAlphaSpaceNumbers: 'Używasz nieprawidłowych znaków! Używaj tylko [0-9, a-Z]',
 
   /* HOME */
   productsTwisted: 'produktów',
@@ -123,9 +123,11 @@ export const polish = {
   productNotExists: 'Produkt nie istnieje! Za chwilę zostaniesz przekeirowany do podstrony z produktami',
 
   /*CATEGORIES */
+  editCategory: "Edytuj kategorię",
   removeCategoryConfirmation: 'Ta operacja na zawsze usunie daną kategorię. Chcesz kontynuować?',
   categoryDeleted: 'Kategoria została usunięta',
   chooseIcon: 'Wybierz ikonę',
+  categoryNotExists: 'Wybrana kategoria nie istnieje!',
 
   /* MEDIA EXPLORER */
   choosePhoto: 'Wybierz zdjęcie',

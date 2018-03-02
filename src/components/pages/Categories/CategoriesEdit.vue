@@ -5,15 +5,16 @@
   <el-breadcrumb separator-class="el-icon-arrow-right">
     <el-breadcrumb-item><span v-lang.shopcms></span></el-breadcrumb-item>
     <el-breadcrumb-item :to="{ path: '/categories' }"><span v-lang.categories></span></el-breadcrumb-item>
-    <el-breadcrumb-item :to="{ path: '/categories/add' }"><span v-lang.addCategory></span></el-breadcrumb-item>
+    <el-breadcrumb-item><span v-lang.editCategory></span></el-breadcrumb-item>
   </el-breadcrumb>
 
   <!-- TITLE -->
-  <h2 class="title" v-lang.addCategory></h2>
+  <h2 class="title" v-lang.editCategory></h2>
 
   <!-- FORM -->
 
   <el-form :model="category" label-position="left" ref="categoryForm" @submit.native.prevent label-width="120px">
+
 
         <!-- name -->
         <el-form-item :rules="[{ required: true, message: this.translate('validateNameIsRequired'), trigger: 'blur' }, { min: 3, max: 100, message: this.translate('validateCatLength'), trigger: 'blur' }, { pattern: /^([0-9a-zÀÁÂÃÄÅĄÇÈÉÊËĘÌÍÎÏÒÓÓÔÕÖßÙÚÛÜÝàąáâãäåçèéęêëìíîïłðòóóôõöùúûüýÿ()\s])+$/i, message: this.translate('validateAlphaSpaceNumbers')}]" :label="translate('name')" prop="name">
@@ -32,7 +33,7 @@
             <el-input type="textarea" v-model="category.description"></el-input>
         </el-form-item>
 
-        <el-button type="success" size="small" @click="addCategory" icon="el-icon-plus">{{ translate('addCategory') }}</el-button>
+        <el-button type="success" size="small" @click="editCategory" icon="el-icon-plus">{{ translate('editCategory') }}</el-button>
   </el-form>
 
 
@@ -49,7 +50,7 @@ import { categoryService} from '@/services/category.service.js'
 import 'font-awesome/css/font-awesome.css';
 
 export default {
-  name: 'CategoriesAdd',
+  name: 'CategoriesEdit',
   mixins: [userMixin],
   data() {
     return {
@@ -66,39 +67,48 @@ export default {
 
     /****************************** ADD CATEGORY ********************************/
 
-    addCategory() {
+    prepareForm() {
+
+      categoryService.getById(this.$route.params.id).then(response => {
+
+        if(response.data && response.data.type) {
+            if(response.data.type == "success") {
+              this.category = response.data.msg;
+            }
+            else this.$message({title: this.translate('error'), message: response.data.msg, type: 'warning'  })
+        } else throw 'error'
+
+      }).catch(err => {
+        this.$message({title: this.translate('error'), message: this.translate('categoryNotExists')+err, type: 'warning'  })
+        setTimeout(() => this.$router.push({ path: '/categories' }), 3000)
+      })
+    },
+
+    /****************************** ADD CATEGORY ********************************/
+
+    editCategory() {
 
       this.loading = true
 
-      this.$refs['categoryForm'].validate((valid) => {
-          if (!valid) {
-              this.$message.error(this.translate('validationWentWrong'))
-              this.loading = false
-              return false
+      categoryService.editCategory(this.category.id, this.category).then(response => {
+
+          if(response.data && response.data.type == "error") {
+
+              //prepare errors array and notify about them
+              let errors = Object.values(response.data.msg)
+              errors = this.translate('validationWentWrong') + errors.reduce((sum, item) => sum+'<li>'+item+'</li>', '<ul>') + '</ul>'
+              this.$message({title: this.translate('error'), message: errors, type: 'warning', dangerouslyUseHTMLString: true})
+
           }
+          else if(response.data && response.data.type == "success") this.$message({title: this.translate('success'), message: response.data.msg, type: 'success'})
+          else this.$message.error(this.translate('errorMsg'));
 
-          categoryService.addCategory(this.category).then(response => {
+          this.loading = false
 
-              if(response.data && response.data.type == "error") {
-
-                  //prepare errors array and notify about them
-                  let errors = Object.values(response.data.msg)
-                  errors = this.translate('validationWentWrong') + errors.reduce((sum, item) => sum+'<li>'+item+'</li>', '<ul>') + '</ul>'
-                  this.$message({title: this.translate('error'), message: errors, type: 'warning', dangerouslyUseHTMLString: true})
-
-              }
-              else if(response.data && response.data.type == "success") this.$message({title: this.translate('success'), message: response.data.msg, type: 'success'})
-              else this.$message.error(this.translate('errorMsg'));
-
-              this.loading = false
-
-          }).catch(err => {
-              this.$message.error(this.translate('errorMsg'))
-              this.loading = false
-          })
-
-      });
-
+      }).catch(err => {
+          this.$message.error(this.translate('errorMsg'))
+          this.loading = false
+      })
     }
 
   },
@@ -106,9 +116,9 @@ export default {
 
     this.signIn().then(user => {
 
-      if (!this.userCan('addCategory')) this.getOut();
+      if (!this.userCan('editCategory')) this.getOut();
 
-        //this.prepareForm();
+        this.prepareForm();
         this.loading = false
 
     })

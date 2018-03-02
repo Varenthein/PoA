@@ -5,7 +5,7 @@
   <el-breadcrumb separator-class="el-icon-arrow-right">
     <el-breadcrumb-item><span v-lang.shopcms></span></el-breadcrumb-item>
     <el-breadcrumb-item :to="{ path: '/products' }"><span v-lang.products></span></el-breadcrumb-item>
-    <el-breadcrumb-item :to="{ path: '/products/add' }"><span v-lang.addProduct></span></el-breadcrumb-item>
+    <el-breadcrumb-item><span v-lang.editProduct></span></el-breadcrumb-item>
   </el-breadcrumb>
 
   <!-- TITLE -->

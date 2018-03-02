@@ -1,6 +1,6 @@
 <template>
 
-  <div class="categories" v-loading="loading">
+  <div class="orders" v-loading="loading">
 
     <!-- BREADCUMB -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
@@ -48,7 +48,7 @@ import { categoryService } from '@/services/category.service.js'
 
 
 export default {
-  name: 'Categories',
+  name: 'Orders',
   mixins: [userMixin],
   data () {
     return {
