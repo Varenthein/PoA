@@ -43,12 +43,12 @@
       </el-table-column>
       <el-table-column prop="status" :sortable="true" :label="translate('status')" width="120">
         <template slot-scope="scope">
-        {{ translate('orderStatus'+scope.row.status) }}</span>
+        <span>{{ translate('orderStatus'+scope.row.status) }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="translate('operations')" width="300">
         <template slot-scope="scope">
-          <el-button type="primary" v-if="userCan('editOrder')" @click="editCategory(scope.row.id)" plain size="small" icon="el-icon-view">{{ translate('show') }}</el-button>
+          <el-button type="primary" v-if="userCan('seeOrder')" @click="seeOrder(scope.row.id)" plain size="small" icon="el-icon-view">{{ translate('show') }}</el-button>
           <el-button type="warning" v-if="userCan('editOrderStatus')" @click="showOrderDialog(scope.row)" plain size="small" icon="el-icon-edit">{{ translate('edit') }}</el-button>
           <el-button type="danger" v-if="userCan('removeOrder')" @click="removeOrder(scope.row.id)" plain size="small" icon="el-icon-close">{{ translate('remove') }}</el-button>
         </template>
@@ -215,6 +215,12 @@ export default {
     });
   },
 
+  /************************** SEE ORDER  *************************/
+
+  seeOrder: function(id) {
+       this.$router.push({ path: '/orders/'+id })
+  }
+
 
   },
   created: function() {
@@ -222,7 +228,7 @@ export default {
       this.signIn().then(user => {
           if(!this.userCan('seeOrder')) this.getOut();
 
-          //load products
+          //load orders
           this.loadOrders();
 
           //load pages amount

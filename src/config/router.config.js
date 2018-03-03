@@ -9,6 +9,7 @@ import Categories from '@/components/pages/Categories/Categories'
 import CategoriesAdd from '@/components/pages/Categories/CategoriesAdd'
 import CategoriesEdit from '@/components/pages/Categories/CategoriesEdit'
 import Orders from '@/components/pages/Orders/Orders'
+import OrdersShow from '@/components/pages/Orders/OrdersShow'
 
 Vue.use(Router)
 
@@ -58,6 +59,11 @@ export default new Router({
       path: '/orders',
       name: 'Orders',
       component: Orders
+    },
+    {
+      path: '/orders/:id',
+      name: 'OrdersShow',
+      component: OrdersShow
     },
     {
       path: '/opinions',

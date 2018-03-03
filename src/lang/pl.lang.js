@@ -62,6 +62,11 @@ export const polish = {
   desc: 'Opis',
   icon: 'Ikona',
   status: 'Status',
+  notes: 'Uwagi',
+  nameAndSurname: 'Imię i nazwisko',
+  email: 'E-mail',
+  telephone: 'Telefon',
+  address: 'Address',
 
   /* OPERATIONS */
   operations: 'Działania',
@@ -77,6 +82,7 @@ export const polish = {
   choose: 'Wybierz',
   editProduct: 'Edytuj produkt',
   show: 'Pokaż',
+  print: 'Drukuj',
 
   /* VALIDATION */
   validateNameIsRequired: 'Proszę podać nazwę produktu',
@@ -138,6 +144,12 @@ export const polish = {
   orderStatus2: 'Zakończono',
   editOrderStatus: 'Edytuj status zamówienia',
   removeOrderConfirmation: 'Ta operacja na zawsze usunie dane zamówienie. Chcesz kontynuować?',
+  orderNotExists: 'Wybrane zamówienie nie istnieje!',
+  orderDetails: 'Szczegóły zamówienia',
+  additionaInfo: 'Dodatkowe informacje',
+  productionDetails: 'Szczegóły produkcyjne',
+  attachements: 'Załączone pliki',
+  noFilesAttached: 'Brak załączonych plików',
 
   /* MEDIA EXPLORER */
   choosePhoto: 'Wybierz zdjęcie',

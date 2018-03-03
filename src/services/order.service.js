@@ -15,6 +15,12 @@ export const orderService = {
     })
   },
 
+  /********** GET ORDER BY ID ************/
+
+  getById: (id) => {
+      return api.get('/order/id/'+id)
+  },
+
   /********** GET AWAITING ORDERS ************/
 
   getAwaitingOrders: () => {
