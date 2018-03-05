@@ -10,6 +10,7 @@ import CategoriesAdd from '@/components/pages/Categories/CategoriesAdd'
 import CategoriesEdit from '@/components/pages/Categories/CategoriesEdit'
 import Orders from '@/components/pages/Orders/Orders'
 import OrdersShow from '@/components/pages/Orders/OrdersShow'
+import Users from '@/components/pages/Users/Users'
 
 Vue.use(Router)
 
@@ -64,6 +65,11 @@ export default new Router({
       path: '/orders/:id',
       name: 'OrdersShow',
       component: OrdersShow
+    },
+    {
+      path: '/users',
+      name: 'Users',
+      component: Users
     },
     {
       path: '/opinions',

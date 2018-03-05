@@ -2,6 +2,19 @@ import api from '@/config/api.config'
 
 export const userService = {
 
+  /********** COUNT ORDERS ************/
+
+  count: () => {
+    return new Promise(function(resolve, reject) {
+      api.get('/user/count').then(response => {
+        if (Number.isInteger(response.data)) resolve(response.data)
+        else reject(false)
+      }).catch(err => {
+        reject(false)
+      });
+    })
+  },
+
   /********** USER CAN *************/
 
   userCan: (perm) => {
@@ -12,6 +25,18 @@ export const userService = {
 
   getUserById: (id) => {
     return api.get('/user/id/'+id)
+  },
+
+  /********** GET USERS WITHING RANGE ************/
+
+  getUsersRange: (limit_from, limit_to) => {
+      return api.get('/user/range/'+limit_from+'/'+limit_to)
+  },
+
+  /********** REMOVE USER ************/
+
+  removeUser: (id) => {
+      return api.delete('/user/remove/'+id)
   },
 
   /********** GET LOGGED USER  ************/

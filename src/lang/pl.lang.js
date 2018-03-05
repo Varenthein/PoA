@@ -42,6 +42,7 @@ export const polish = {
   couldntLoadProducts: 'Nie udało się załadować produktów...',
   couldntLoadOpinions: 'Nie udało się załadować opinii...',
   couldntLoadCategories: 'Nie udało się załadować kategorii...',
+  couldntLoadUsers: 'Nie udało się załadować użytkowników...',
   productDeleted: 'Produkt został usunięty!',
 
   /* PROPS */
@@ -150,6 +151,9 @@ export const polish = {
   productionDetails: 'Szczegóły produkcyjne',
   attachements: 'Załączone pliki',
   noFilesAttached: 'Brak załączonych plików',
+
+  /* USERS */
+  removeUserConfirmation: 'Ta operacja na zawsze usunie tego użytkownika. Chcesz kontynuować?',
 
   /* MEDIA EXPLORER */
   choosePhoto: 'Wybierz zdjęcie',
