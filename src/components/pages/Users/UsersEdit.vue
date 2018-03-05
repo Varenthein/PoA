@@ -193,7 +193,7 @@ export default {
 
     this.signIn().then(user => {
 
-      if (!this.userCan('addUser')) this.getOut();
+      if (!this.userCan('editUser')) this.getOut();
 
         this.prepareForm();
 

@@ -20,6 +20,7 @@ export const polish = {
   addUser: 'Dodaj użytkownika',
   userGroups: 'Grupy użytkowników',
   allUsers: 'Wszyscy użytkownicy',
+  editProfile: 'Edytuj profil',
   promotions: 'Promocje',
   newsletter: 'Newsletter',
   opinions: 'Opinie',

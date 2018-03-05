@@ -30,7 +30,8 @@ export default {
   data () {
     return {
        User: { permissions: {}},
-       activeLink:  '/home'
+       activeLink:  '/home',
+       links: []
     }
   },
   methods: {
@@ -38,48 +39,59 @@ export default {
         /***************************** LOAD USER **************************/
 
         loadUser: function() {
-          userService.getLoggedUser().then(response => {
-            this.User = response.data;
-            this.User.permissions = JSON.parse(this.User.permissions);
-            Object.keys(this.User.permissions).map((key, index) => {
-                this.User.permissions[key] = (this.User.permissions[key] == "true") ? true : false
-            })
-          }).catch(err => {
-            this.$notify({title: this.translate('accessDenied'), message: this.translate('accessDeniedMsg'), type: 'error'})
-            setTimeout(() => { window.location = "" }, 3000);
-          });
+          return new Promise((resolve, reject) => {
+
+            userService.getLoggedUser().then(response => {
+              this.User = response.data;
+              this.User.permissions = JSON.parse(this.User.permissions);
+              Object.keys(this.User.permissions).map((key, index) => {
+                  this.User.permissions[key] = (this.User.permissions[key] == "true") ? true : false
+              })
+              resolve()
+            }).catch(err => {
+              this.$notify({title: this.translate('accessDenied'), message: this.translate('accessDeniedMsg'), type: 'error'})
+              setTimeout(() => { window.location = "" }, 3000);
+              reject();
+            });
+
+          })
+
         }
 
   },
   created: function () {
 
     //load user
-    this.loadUser();
+    this.loadUser().then(response => {
 
-    //load menu structure
-    this.links = [
-      { title: this.translate('homepage'), pathTo: '/home', subMenu: false },
-      { title: this.translate('products'), perm: 'seeProduct', pathTo: '/products', subMenu: [
-        { title: this.translate('allProducts'), perm: 'seeProduct', pathTo: '/products', subMenu: false },
-        { title: this.translate('addProduct'), perm: 'addProduct', pathTo: '/products/add', subMenu: false },
-        { title: this.translate('categories'), perm: 'seeCategory', pathTo: '/categories', subMenu: false }
-      ]},
-      { title: this.translate('orders'), perm: 'seeOrder', pathTo: '/orders', subMenu: false},
-      { title: this.translate('users'), perm: 'seeUser', pathTo: '/users', subMenu: [
-        { title: this.translate('allUsers'), perm: 'seeUser', pathTo: '/users', subMenu: false },
-        { title: this.translate('addUser'), pathTo: 'UserAdd', subMenu: false },
-        { title: this.translate('userGroups'), pathTo: 'UserGroups', subMenu: false }
-      ]},
-      { title: this.translate('promotions'), pathTo: 'Promotions', subMenu: [
-        { title: this.translate('allPromotions'), pathTo: 'PromotionsAll', subMenu: false },
-        { title: this.translate('addPromotion'), pathTo: 'PromotionAdd', subMenu: false }
-      ]},
-      { title: this.translate('opinions'), pathTo: '/opinions', perm: 'seeOpinion', subMenu: false},
-      { title: this.translate('newsletter'), pathTo: 'Newsletter', subMenu: false },
-      { title: this.translate('others'), pathTo: 'others', subMenu: [
-              { title: this.translate('stats'), pathTo: 'stats', subMenu: false}
-      ]}
-    ]
+          //load menu structure
+          this.links = [
+            { title: this.translate('homepage'), pathTo: '/home', subMenu: false },
+            { title: this.translate('products'), perm: 'seeProduct', pathTo: '/products', subMenu: [
+              { title: this.translate('allProducts'), perm: 'seeProduct', pathTo: '/products', subMenu: false },
+              { title: this.translate('addProduct'), perm: 'addProduct', pathTo: '/products/add', subMenu: false },
+              { title: this.translate('categories'), perm: 'seeCategory', pathTo: '/categories', subMenu: false }
+            ]},
+            { title: this.translate('orders'), perm: 'seeOrder', pathTo: '/orders', subMenu: false},
+            { title: this.translate('users'), perm: 'seeUser', pathTo: '/users', subMenu: [
+              { title: this.translate('allUsers'), perm: 'seeUser', pathTo: '/users', subMenu: false },
+              { title: this.translate('addUser'), perm: 'addUser', pathTo: '/users/add', subMenu: false },
+              { title: this.translate('userGroups'), pathTo: 'UserGroups', subMenu: false },
+              { title: this.translate('editProfile'), pathTo: '/users/edit/'+this.User.id, subMenu: false },
+            ]},
+            { title: this.translate('promotions'), pathTo: 'Promotions', subMenu: [
+              { title: this.translate('allPromotions'), pathTo: 'PromotionsAll', subMenu: false },
+              { title: this.translate('addPromotion'), pathTo: 'PromotionAdd', subMenu: false }
+            ]},
+            { title: this.translate('opinions'), pathTo: '/opinions', perm: 'seeOpinion', subMenu: false},
+            { title: this.translate('newsletter'), pathTo: 'Newsletter', subMenu: false },
+            { title: this.translate('others'), pathTo: 'others', subMenu: [
+                    { title: this.translate('stats'), pathTo: 'stats', subMenu: false}
+            ]}
+          ]
+
+    })
+
   }
 }
 </script>

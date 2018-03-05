@@ -19,7 +19,7 @@
     <el-table :default-sort = "{prop: 'id', order: 'ascending'}" :empty-text="translate('noData')" v-loading="loading" :data="products" stripe style="width: 100%">
       <el-table-column :sortable="true" type="index" :index="indexMethod">
       </el-table-column>
-      <el-table-column prop="name" :sortable="true" :label="translate('product')" width="670">
+      <el-table-column prop="name" :sortable="true" :label="translate('product')" width="710">
       </el-table-column>
       <el-table-column :label="translate('operations')" width="200">
         <template slot-scope="scope">
