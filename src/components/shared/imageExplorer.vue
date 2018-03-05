@@ -74,6 +74,9 @@ export default {
       image: {}
     }
   },
+  watch: {
+      thumb(val, oldval) { this.prepareBtn() }
+  },
   methods: {
 
     /************** PREPARE BUTTON *****************/

@@ -11,6 +11,8 @@ import CategoriesEdit from '@/components/pages/Categories/CategoriesEdit'
 import Orders from '@/components/pages/Orders/Orders'
 import OrdersShow from '@/components/pages/Orders/OrdersShow'
 import Users from '@/components/pages/Users/Users'
+import UsersAdd from '@/components/pages/Users/UsersAdd'
+import UsersEdit from '@/components/pages/Users/UsersEdit'
 
 Vue.use(Router)
 
@@ -70,6 +72,16 @@ export default new Router({
       path: '/users',
       name: 'Users',
       component: Users
+    },
+    {
+      path: '/users/add',
+      name: 'UsersAdd',
+      component: UsersAdd
+    },
+    {
+      path: '/users/edit/:id',
+      name: 'UsersEdit',
+      component: UsersEdit
     },
     {
       path: '/opinions',

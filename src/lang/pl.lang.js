@@ -43,6 +43,7 @@ export const polish = {
   couldntLoadOpinions: 'Nie udało się załadować opinii...',
   couldntLoadCategories: 'Nie udało się załadować kategorii...',
   couldntLoadUsers: 'Nie udało się załadować użytkowników...',
+  couldntLoadUserGroups: 'Nie udało się załadować grup użytkowników',
   productDeleted: 'Produkt został usunięty!',
 
   /* PROPS */
@@ -68,6 +69,10 @@ export const polish = {
   email: 'E-mail',
   telephone: 'Telefon',
   address: 'Address',
+  login: 'Login',
+  password: 'Hasło',
+  password_repeated: 'Powtórz hasło',
+  role: 'Rola',
 
   /* OPERATIONS */
   operations: 'Działania',
@@ -87,9 +92,18 @@ export const polish = {
 
   /* VALIDATION */
   validateNameIsRequired: 'Proszę podać nazwę produktu',
+  validateLoginIsRequired: 'Proszę podać login',
+  validatePassIsRequired: 'Proszę podać hasło',
+  validateRePassIsRequired: 'Proszę powtózyć hasło!',
+  validatePasswordsNotMatch: 'Podane hasła się różnią!',
+  validateEmailIsRequired: 'E-mail jest wymagany',
+  validateEmailIsWrong: 'E-mail jest niepoprawny',
+  validateRoleIsRequired: 'Rola jest wymagana!',
   validateProdLength: 'Długość musi mieścić się w przedziale (3-100)',
   validateCatLength: 'Długość musi mieścić się w przedziale (3-100)',
-  validateAlphaSpace: 'Używasz nieprawidłowych znaków! Tylko litery i spacje są wspierane',
+  validateLoginLength: 'Długość musi mieścić się w przedziale (3-30)',
+  validatePassLength: 'Hasło musi mieć co najmniej 6 znaków',
+  validateAlphaSpace: 'Używasz nieprawidłowych znaków! Tylko litery i spacje!',
   validateAlphaSpaceNumbers: 'Używasz nieprawidłowych znaków! Używaj tylko [0-9, a-Z]',
 
   /* HOME */
@@ -154,6 +168,10 @@ export const polish = {
 
   /* USERS */
   removeUserConfirmation: 'Ta operacja na zawsze usunie tego użytkownika. Chcesz kontynuować?',
+  chooseRole: 'Wybierz rolę',
+  userNotExists: 'Taki użytkownik nie istnieje!',
+  leavePassEmpty: 'Jesli nie chcesz zmieniać hasła, pozostaw pole "Hasło" oraz "Powtórz hasło" puste',
+  editUser: 'Edytuj użytkownika',
 
   /* MEDIA EXPLORER */
   choosePhoto: 'Wybierz zdjęcie',

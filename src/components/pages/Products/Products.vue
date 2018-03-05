@@ -160,7 +160,7 @@ export default {
 }
 
 .addProductBtn {
-  margin-top: 10px;
+  margin-top: 50px;
   float: right;
 }
 

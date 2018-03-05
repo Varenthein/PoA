@@ -39,6 +39,25 @@ export const userService = {
       return api.delete('/user/remove/'+id)
   },
 
+
+  /********** ADD USER ************/
+
+  addUser: (user) => {
+      return api.post('/user/add', user)
+  },
+
+  /********** EDIT USER ************/
+
+  editUser: (id, user) => {
+      return api.post('/user/edit/'+id, user)
+  },
+
+  /********** GET USERS GROUPS ************/
+
+  getUserGroups: () => {
+      return api.get('/user/group/all')
+  },
+
   /********** GET LOGGED USER  ************/
 
   getLoggedUser: () => {
