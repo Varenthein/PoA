@@ -46,6 +46,7 @@ export const polish = {
   couldntLoadUsers: 'Nie udało się załadować użytkowników...',
   couldntLoadUserGroups: 'Nie udało się załadować grup użytkowników',
   productDeleted: 'Produkt został usunięty!',
+  couldntLoadPerms: 'Nie udało się załadować lsity uprawnień...',
 
   /* PROPS */
   date_recieved: 'Data otrzymania',
@@ -74,6 +75,7 @@ export const polish = {
   password: 'Hasło',
   password_repeated: 'Powtórz hasło',
   role: 'Rola',
+  permissions: 'Uprawnienia',
 
   /* OPERATIONS */
   operations: 'Działania',
@@ -106,6 +108,8 @@ export const polish = {
   validatePassLength: 'Hasło musi mieć co najmniej 6 znaków',
   validateAlphaSpace: 'Używasz nieprawidłowych znaków! Tylko litery i spacje!',
   validateAlphaSpaceNumbers: 'Używasz nieprawidłowych znaków! Używaj tylko [0-9, a-Z]',
+  validateGroupNameIsRequired: 'Nazwa grupy jest wymagana',
+  validateLength: 'Długość nie mieści się w podanym przedziale ({min}-{max})',
 
   /* HOME */
   productsTwisted: 'produktów',
@@ -173,6 +177,8 @@ export const polish = {
   userNotExists: 'Taki użytkownik nie istnieje!',
   leavePassEmpty: 'Jesli nie chcesz zmieniać hasła, pozostaw pole "Hasło" oraz "Powtórz hasło" puste',
   editUser: 'Edytuj użytkownika',
+  addUserGroup: 'Dodaj grupę użytkownika',
+  removeUserGroupConfirmation: 'Jesteś pewny, że chcesz usunąć tę grupę użytkownika?',
 
   /* MEDIA EXPLORER */
   choosePhoto: 'Wybierz zdjęcie',

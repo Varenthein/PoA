@@ -1,18 +1,34 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
+/* HOME */
 import Home from '@/components/pages/Home/Home'
+
+/* OPINIONS */
 import Opinions from '@/components/pages/Opinions/Opinions'
+
+/* PORDUCTS */
 import Products from '@/components/pages/Products/Products'
 import ProductsAdd from '@/components/pages/Products/ProductsAdd'
 import ProductsEdit from '@/components/pages/Products/ProductsEdit'
+
+/* CATEGORIES */
 import Categories from '@/components/pages/Categories/Categories'
 import CategoriesAdd from '@/components/pages/Categories/CategoriesAdd'
 import CategoriesEdit from '@/components/pages/Categories/CategoriesEdit'
+
+/* ORDERS */
 import Orders from '@/components/pages/Orders/Orders'
 import OrdersShow from '@/components/pages/Orders/OrdersShow'
+
+/* USERS */
 import Users from '@/components/pages/Users/Users'
 import UsersAdd from '@/components/pages/Users/UsersAdd'
 import UsersEdit from '@/components/pages/Users/UsersEdit'
+
+/* USER GROUPS */
+import UserGroups from '@/components/pages/UserGroups/UserGroups'
+import UserGroupsAdd from '@/components/pages/UserGroups/UserGroupsAdd'
 
 Vue.use(Router)
 
@@ -82,6 +98,16 @@ export default new Router({
       path: '/users/edit/:id',
       name: 'UsersEdit',
       component: UsersEdit
+    },
+    {
+      path: '/users/groups',
+      name: 'UserGroups',
+      component: UserGroups
+    },
+    {
+      path: '/users/groups/add',
+      name: 'UserGroupsAdd',
+      component: UserGroupsAdd
     },
     {
       path: '/opinions',

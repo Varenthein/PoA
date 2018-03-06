@@ -33,17 +33,34 @@ export const userService = {
       return api.get('/user/range/'+limit_from+'/'+limit_to)
   },
 
+  /********** GET USER GROUPS WITHING RANGE ************/
+
+  getUserGroupsRange: (limit_from, limit_to) => {
+      return api.get('/user/group/range/'+limit_from+'/'+limit_to)
+  },
+
   /********** REMOVE USER ************/
 
   removeUser: (id) => {
       return api.delete('/user/remove/'+id)
   },
 
+  /********** REMOVE USER GROUP ************/
+
+  removeUserGroup: (id) => {
+      return api.delete('/user/group/remove/'+id)
+  },
 
   /********** ADD USER ************/
 
   addUser: (user) => {
       return api.post('/user/add', user)
+  },
+
+  /********** ADD USER GROUP ************/
+
+  addUserGroup: (userGrp) => {
+      return api.post('/user/group/add', userGrp)
   },
 
   /********** EDIT USER ************/

@@ -76,7 +76,7 @@ export default {
             { title: this.translate('users'), perm: 'seeUser', pathTo: '/users', subMenu: [
               { title: this.translate('allUsers'), perm: 'seeUser', pathTo: '/users', subMenu: false },
               { title: this.translate('addUser'), perm: 'addUser', pathTo: '/users/add', subMenu: false },
-              { title: this.translate('userGroups'), pathTo: 'UserGroups', subMenu: false },
+              { title: this.translate('userGroups'), perm: 'seeUserGroup', pathTo: '/users/groups', subMenu: false },
               { title: this.translate('editProfile'), pathTo: '/users/edit/'+this.User.id, subMenu: false },
             ]},
             { title: this.translate('promotions'), pathTo: 'Promotions', subMenu: [
