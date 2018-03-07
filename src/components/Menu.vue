@@ -76,9 +76,9 @@ export default {
               { title: this.translate('userGroups'), perm: 'seeUserGroup', pathTo: '/users/groups', subMenu: false },
               { title: this.translate('editProfile'), pathTo: '/users/edit/'+this.User.id, subMenu: false },
             ]},
-            { title: this.translate('promotions'), pathTo: 'Promotions', subMenu: [
-              { title: this.translate('allPromotions'), pathTo: 'PromotionsAll', subMenu: false },
-              { title: this.translate('addPromotion'), pathTo: 'PromotionAdd', subMenu: false }
+            { title: this.translate('promotions'), perm: 'seePromotion', pathTo: '/promotions', subMenu: [
+              { title: this.translate('allPromotions'), perm: 'seePromotion', pathTo: '/promotions', subMenu: false },
+              { title: this.translate('addPromotion'), perm: 'addPromotion', pathTo: '/promotions/add', subMenu: false }
             ]},
             { title: this.translate('opinions'), pathTo: '/opinions', perm: 'seeOpinion', subMenu: false},
             { title: this.translate('newsletter'), pathTo: 'Newsletter', subMenu: false },

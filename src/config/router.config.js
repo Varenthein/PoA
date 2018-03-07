@@ -31,6 +31,11 @@ import UserGroups from '@/components/pages/UserGroups/UserGroups'
 import UserGroupsAdd from '@/components/pages/UserGroups/UserGroupsAdd'
 import UserGroupsEdit from '@/components/pages/UserGroups/UserGroupsEdit'
 
+/* PROMOTIONS */
+import Promotions from '@/components/pages/Promotions/Promotions'
+import PromotionsAdd from '@/components/pages/Promotions/PromotionsAdd'
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -114,6 +119,16 @@ export default new Router({
       path: '/users/group/edit/:id',
       name: 'UserGroupsEdit',
       component: UserGroupsEdit
+    },
+    {
+      path: '/promotions',
+      name: 'Promotions',
+      component: Promotions
+    },
+    {
+      path: '/promotions/add',
+      name: 'PromotionsAdd',
+      component: PromotionsAdd
     },
     {
       path: '/opinions',

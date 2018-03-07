@@ -47,6 +47,7 @@ export const polish = {
   couldntLoadUserGroups: 'Nie udało się załadować grup użytkowników',
   productDeleted: 'Produkt został usunięty!',
   couldntLoadPerms: 'Nie udało się załadować lsity uprawnień...',
+  couldntLoadPromotions: 'Nie udało się załadować promocji',
 
   /* PROPS */
   date_recieved: 'Data otrzymania',
@@ -76,6 +77,14 @@ export const polish = {
   password_repeated: 'Powtórz hasło',
   role: 'Rola',
   permissions: 'Uprawnienia',
+  start_at: 'Data rozpoczęcia',
+  end_at: 'Data zakończenia',
+  single: 'Jeden',
+  several: 'Kilka',
+  all: 'Wszystkie',
+  percent_less: 'Zniżka procentowa',
+  amount_less: 'Zniżka kwotowa',
+
 
   /* OPERATIONS */
   operations: 'Działania',
@@ -94,7 +103,7 @@ export const polish = {
   print: 'Drukuj',
 
   /* VALIDATION */
-  validateNameIsRequired: 'Proszę podać nazwę produktu',
+  validateNameIsRequired: 'Proszę podać nazwę',
   validateLoginIsRequired: 'Proszę podać login',
   validatePassIsRequired: 'Proszę podać hasło',
   validateRePassIsRequired: 'Proszę powtózyć hasło!',
@@ -110,6 +119,8 @@ export const polish = {
   validateAlphaSpaceNumbers: 'Używasz nieprawidłowych znaków! Używaj tylko [0-9, a-Z]',
   validateGroupNameIsRequired: 'Nazwa grupy jest wymagana',
   validateLength: 'Długość nie mieści się w podanym przedziale ({min}-{max})',
+  validateItsRequired: 'To pole jest wymagane!',
+  valdiateNumber: 'Używasz nieprawidłowych znaków! Tylko liczby!',
 
   /* HOME */
   productsTwisted: 'produktów',
@@ -180,6 +191,12 @@ export const polish = {
   addUserGroup: 'Dodaj grupę użytkownika',
   removeUserGroupConfirmation: 'Jesteś pewny, że chcesz usunąć tę grupę użytkownika?',
   editUserGroup: 'Edytuj grupę',
+  discount: 'Zniżka ({unit})',
+
+  /* PROMOTIONS */
+  removePromotionConfirmation: 'Czy na pewno chcesz usunąć tę promocję?',
+  pickDateAndTime: 'Wybierz datę i czas',
+  discountData: 'Zniżki',
 
   /* MEDIA EXPLORER */
   choosePhoto: 'Wybierz zdjęcie',
