@@ -1,6 +1,6 @@
 # shopcms
 
-> A Vue.js project
+> A Vue.js front-end of e-commerce admin dashboard. This repo is only front-end part of the project. It's fully compatible with the back-end part (CRUD API) written in PHP.
 
 ## Build Setup
 
