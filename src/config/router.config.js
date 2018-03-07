@@ -29,6 +29,7 @@ import UsersEdit from '@/components/pages/Users/UsersEdit'
 /* USER GROUPS */
 import UserGroups from '@/components/pages/UserGroups/UserGroups'
 import UserGroupsAdd from '@/components/pages/UserGroups/UserGroupsAdd'
+import UserGroupsEdit from '@/components/pages/UserGroups/UserGroupsEdit'
 
 Vue.use(Router)
 
@@ -108,6 +109,11 @@ export default new Router({
       path: '/users/groups/add',
       name: 'UserGroupsAdd',
       component: UserGroupsAdd
+    },
+    {
+      path: '/users/group/edit/:id',
+      name: 'UserGroupsEdit',
+      component: UserGroupsEdit
     },
     {
       path: '/opinions',

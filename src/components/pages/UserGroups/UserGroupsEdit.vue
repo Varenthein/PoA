@@ -1,11 +1,11 @@
 <template>
-<div class="userGroupsAdd" v-loading="loading">
+<div class="userGroupsEdit" v-loading="loading">
 
   <!-- BREADCUMB -->
   <el-breadcrumb separator-class="el-icon-arrow-right">
     <el-breadcrumb-item><span v-lang.shopcms></span></el-breadcrumb-item>
     <el-breadcrumb-item :to="{ path: '/users/groups' }"><span v-lang.userGroups></span></el-breadcrumb-item>
-    <el-breadcrumb-item :to="{ path: '/users/groups/add' }"><span v-lang.addUserGroup></span></el-breadcrumb-item>
+    <el-breadcrumb-item><span v-lang.editUserGroup></span></el-breadcrumb-item>
   </el-breadcrumb>
 
   <!-- TITLE -->
@@ -33,7 +33,7 @@
         </el-row>
 
     <!-- Add user button -->
-    <el-button type="success" size="small" @click="addUserGroup" icon="el-icon-plus">{{ translate('addUserGroup') }}</el-button>
+    <el-button type="success" size="small" @click="editUserGroup" icon="el-icon-plus">{{ translate('addUserGroup') }}</el-button>
 
   </el-form>
 
@@ -45,11 +45,10 @@
 
 /* IMPORT SERVICES */
 import { userService, userMixin } from '@/services/user.service.js'
-import { optionService } from '@/services/option.service.js'
 
 
 export default {
-  name: 'UsersGroupAdd',
+  name: 'UsersGroupEdit',
   mixins: [userMixin],
   data() {
     return {
@@ -66,19 +65,18 @@ export default {
 
     prepareForm() {
 
-        //get perms
-        optionService.getByName('perms').then(response => {
+        //get user group
+        userService.getUserGroupById(this.$route.params.id).then(response => {
           const resp = response.data
           if(resp.type && resp.type == "error") this.$notify({title: this.translate('error'), message: resp.msg, type: 'error'})
           else if(resp.type && resp.type == "success") {
-             const perms = JSON.parse(resp.msg.value)
-             Object.keys(perms).forEach((key) => {
-               this.$set(this.userGroup.perms, key, perms[key])
-             });
+             const perms = JSON.parse(resp.msg.perms)
+             this.userGroup = resp.msg
+             this.userGroup.perms = JSON.parse(this.userGroup.perms)
              this.loading = false
            } else throw 'err'
         }).catch(err => {
-            this.$notify({title: this.translate('error'), message: this.translate('couldntLoadPerms')+err, type: 'warning'})
+            this.$notify({title: this.translate('error'), message: this.translate('couldntLoadUserGroups')+err, type: 'warning'})
             setTimeout(() => this.$router.push({ path: '/users/groups' }), 3000)
         })
 
@@ -86,7 +84,7 @@ export default {
 
     /****************************** ADD USER ********************************/
 
-    addUserGroup() {
+    editUserGroup() {
 
       this.loading = true
 
@@ -102,7 +100,7 @@ export default {
           const userGrp = Object.assign({}, this.userGroup)
           userGrp.perms = JSON.stringify(this.userGroup.perms)
 
-          userService.addUserGroup(userGrp).then(response => {
+          userService.editUserGroup(userGrp.id, userGrp).then(response => {
 
               if(response.data && response.data.type == "error") {
 
@@ -131,9 +129,9 @@ export default {
 
     this.signIn().then(user => {
 
-      if (!this.userCan('addUserGroup')) this.getOut();
-
-        this.prepareForm();
+      this.userCan('editUserGroup');
+      if (!this.userCan('editUserGroup')) this.getOut();
+      this.prepareForm();
 
     })
 

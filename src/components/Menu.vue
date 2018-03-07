@@ -44,9 +44,6 @@ export default {
             userService.getLoggedUser().then(response => {
               this.User = response.data;
               this.User.permissions = JSON.parse(this.User.permissions);
-              Object.keys(this.User.permissions).map((key, index) => {
-                  this.User.permissions[key] = (this.User.permissions[key] == "true") ? true : false
-              })
               resolve()
             }).catch(err => {
               this.$notify({title: this.translate('accessDenied'), message: this.translate('accessDeniedMsg'), type: 'error'})

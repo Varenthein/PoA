@@ -27,6 +27,12 @@ export const userService = {
     return api.get('/user/id/'+id)
   },
 
+  /********** GET USER GROUP BY ID ************/
+
+  getUserGroupById: (id) => {
+    return api.get('/user/group/id/'+id)
+  },
+
   /********** GET USERS WITHING RANGE ************/
 
   getUsersRange: (limit_from, limit_to) => {
@@ -68,6 +74,13 @@ export const userService = {
   editUser: (id, user) => {
       return api.post('/user/edit/'+id, user)
   },
+
+  /********** EDIT USER GROUP ************/
+
+  editUserGroup: (id, userGrp) => {
+      return api.post('/user/group/edit/'+id, userGrp)
+  },
+
 
   /********** GET USERS GROUPS ************/
 
@@ -113,9 +126,6 @@ export const userMixin = {
           if (response.data.login.length) {
             let User = response.data
             User.permissions = JSON.parse(User.permissions)
-            Object.keys(User.permissions).map((key, index) => {
-                User.permissions[key] = (User.permissions[key] == "true") ? true : false
-            })
             this.User = User
             resolve(User)
           }

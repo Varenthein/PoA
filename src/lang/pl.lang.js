@@ -179,6 +179,7 @@ export const polish = {
   editUser: 'Edytuj użytkownika',
   addUserGroup: 'Dodaj grupę użytkownika',
   removeUserGroupConfirmation: 'Jesteś pewny, że chcesz usunąć tę grupę użytkownika?',
+  editUserGroup: 'Edytuj grupę',
 
   /* MEDIA EXPLORER */
   choosePhoto: 'Wybierz zdjęcie',
