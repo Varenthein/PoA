@@ -22,6 +22,7 @@
         <h3 v-lang.basicInfo></h3>
         <div class="line"></div>
 
+
         <!-- name -->
         <el-form-item :rules="[{ required: true, message: this.translate('validateNameIsRequired'), trigger: 'blur' }, { min: 3, max: 50, message: this.translate('validateLength', { min: 3, max: 50}), trigger: 'blur' }, { pattern: /^([0-9a-zÀÁÂÃÄÅĄÇÈÉÊËĘÌÍÎÏÒÓÓÔÕÖßÙÚÛÜÝàąáâãäåçèéęêëìíîïłðòóóôõöùúûüýÿ\s])+$/i, message: this.translate('validateAlphaSpaceNumbers')}]" :label="translate('name')" prop="name">
           <el-input v-model="promotion.name"></el-input>
@@ -29,12 +30,12 @@
 
         <!-- start at -->
         <el-form-item :label="translate('start_at')" :rules="[{ required: true, message: this.translate('validateItsRequired')}]">
-          <el-date-picker v-model="promotion.start_at" type="datetime" :placeholder="translate('pickDateAndTime')"></el-date-picker>
+          <el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="promotion.start_at" type="datetime" :placeholder="translate('pickDateAndTime')"></el-date-picker>
         </el-form-item>
 
         <!-- end at -->
-        <el-form-item :label="translate('start_at')" :rules="[{ required: true, message: this.translate('validateItsRequired')}]">
-          <el-date-picker v-model="promotion.end_at" type="datetime" :placeholder="translate('pickDateAndTime')"></el-date-picker>
+        <el-form-item :label="translate('end_at')" :rules="[{ required: true, message: this.translate('validateItsRequired')}]">
+          <el-date-picker value-format="yyyy-MM-dd HH:mm:ss" v-model="promotion.end_at" type="datetime" :placeholder="translate('pickDateAndTime')"></el-date-picker>
         </el-form-item>
 
         <!-- products -->
@@ -46,17 +47,26 @@
           </el-radio-group>
         </el-form-item>
 
+        <el-form-item v-show="promotion.products_type != 'all'" label="" prop="products">
+          <el-select :placeholder="translate('addProduct')" @change="addProduct()" v-model="product">
+            <el-option :key="prod.id" v-for="(prod, index) in products" :label="prod.name" :value="prod"></el-option>
+          </el-select>
+          <div>
+            <el-tag v-for="product in promotion.products" :key="product.name" closable type="" @close="delProduct(product)" size="small"> {{product.name}}</el-tag>
+          </div>
+        </el-form-item>
+
         <!-- DISCOUNT DATA -->
         <h3 v-lang.discountData></h3>
         <div class="line"></div>
 
         <!-- percent less -->
-        <el-form-item :label="translate('percent_less')" prop="percent_less" :rules="[{ required: true, message: this.translate('validateItsRequired')}, { type: 'number', message: this.translate('validateNumber')}]">
+        <el-form-item :label="translate('percent_less')" prop="percent_less" :rules="[{ required: true, message: this.translate('validateItsRequired')}, { type: 'number', message: this.translate('validateNumber')}, { validator: percentValidator, trigger: 'blur' }]">
             <el-input type="number" min=0 max=100 v-model.number="promotion.percent_less" auto-complete="off"></el-input>
         </el-form-item>
 
         <!-- amount less -->
-        <el-form-item :label="translate('amount_less')" prop="amount_less" :rules="[{ required: true, message: this.translate('validateItsRequired')}, { type: 'number', message: this.translate('validateNumber')}]">
+        <el-form-item :label="translate('amount_less')" prop="amount_less" :rules="[{ required: true, message: this.translate('validateItsRequired')}, { type: 'number', message: this.translate('validateNumber')}, { validator: amountValidator, trigger: 'blur' }]">
             <el-input type="number" min=0 v-model.number="promotion.amount_less" auto-complete="off"></el-input>
         </el-form-item>
 
@@ -84,8 +94,8 @@
 
 /* IMPORT SERVICES */
 import { userService, userMixin } from '@/services/user.service.js'
-import productService from '@/services/product.service.js'
-import promotionService from '@/services/promotion.service.js'
+import { productService } from '@/services/product.service.js'
+import { promotionService } from '@/services/promotion.service.js'
 
 /* IMPORT IMAGE EXPLORER */
 import imageExplorer from '@/components/shared/imageExplorer'
@@ -104,39 +114,62 @@ export default {
         percent_less: 0,
         amount_less: 0,
         image: '',
-        start_at_date: '',
+        start_at: '',
         end_at: '',
       },
-      products: []
+      products: [],
+      product: ''
     }
   },
   methods: {
+
+    /*********************** PERCENT VALIDATOR *********************/
+
+    percentValidator(rule, value, callback) {
+      if (value < 0 || value > 100) {
+        callback(new Error(this.translate('validateLength',{ min: 0, max: 100})));
+      } else {
+        callback();
+      }
+    },
+
+    /*********************** AMOUNT VALIDATOR *********************/
+
+    amountValidator(rule, value, callback) {
+      if (value < 0) {
+        callback(new Error(this.translate('validateLength',{ min: 0, max: 'brak granicy'})));
+      } else {
+        callback();
+      }
+    },
+
 
     /****************************** PREAPRE FORM *****************************/
 
     prepareForm() {
 
-        //get user groups
-        userService.getUserGroups().then(response => {
+        //get products
+        productService.getAllShort().then(response => {
           const resp = response.data
           if(resp.type && resp.type == "error") this.$notify({title: this.translate('error'), message: resp.msg, type: 'error'})
           else if(resp.type && resp.type == "success") {
-             this.user_groups = resp.msg
+             this.products = resp.msg
              this.loading = false
            } else throw 'err'
         }).catch(err => {
-            this.$notify({title: this.translate('error'), message: this.translate('couldntLoadUserGroups'), type: 'warning'})
+            this.$notify({title: this.translate('error'), message: this.translate('couldntLoadProducts'), type: 'warning'})
+            setTimeout(() => window.location = '/promotions', 3000)
         })
 
     },
 
-    /****************************** ADD USER ********************************/
+    /****************************** ADD PROMOTION ********************************/
 
     addPromotion() {
 
       this.loading = true
 
-      this.$refs['userForm'].validate((valid) => {
+      this.$refs['promotionForm'].validate((valid) => {
 
           if (!valid) {
               this.$message.error(this.translate('validationWentWrong'))
@@ -145,9 +178,18 @@ export default {
           }
 
           //prepare data
-          if(this.user.avatar.id) this.user.avatar = this.user.avatar.id;
+          const promotion = Object.assign({}, this.promotion)
 
-          userService.addUser(this.user).then(response => {
+          if(promotion.products_type == "all") {
+              promotion.products.splice(0,promotion.length)
+              promotion.products = this.products.slice()
+          }
+
+          promotion.image = (promotion.image) ? parseInt(promotion.image.id) : '';
+
+          promotion.products = promotion.products.map(item => parseInt(item.id))
+          //promotion.products = JSON.parse(promotion.products)
+          promotionService.addPromotion(promotion).then(response => {
 
               if(response.data && response.data.type == "error") {
 
@@ -169,6 +211,27 @@ export default {
 
       });
 
+    },
+
+    /****************************** ADD PRODUCT *************************************/
+
+    addProduct() {
+
+      if(this.promotion.products_type == "single") {
+        this.promotion.products.splice(0,this.promotion.products.length)
+        this.promotion.products.push(this.product)
+      }
+      else if(this.promotion.products_type == "several") {
+        if(this.promotion.products.indexOf(this.product) == -1) this.promotion.products.push(this.product)
+      }
+
+    },
+
+    /***************************** REMOVE PRODUCT ***********************************/
+
+    delProduct(elem) {
+
+      this.promotion.products.splice(this.promotion.products.indexOf(elem), 1)
     }
 
   },
@@ -205,10 +268,6 @@ export default {
   max-width: 250px;
 }
 
-.el-tag+.el-tag {
-  margin-left: 10px;
-}
-
 .el-button {
   margin-top: 5px;
   margin-right: 5px;
@@ -218,4 +277,8 @@ export default {
   margin-right: 10px;
 }
 
+.el-select-dropdown__item.selected {
+  color: #606266;
+  font-weight: initial;
+}
 </style>

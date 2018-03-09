@@ -119,6 +119,7 @@ export const polish = {
   validateAlphaSpaceNumbers: 'Używasz nieprawidłowych znaków! Używaj tylko [0-9, a-Z]',
   validateGroupNameIsRequired: 'Nazwa grupy jest wymagana',
   validateLength: 'Długość nie mieści się w podanym przedziale ({min}-{max})',
+  validateValue: 'Wartość nie mieści się w podanym przedziale ({min}-{max})',
   validateItsRequired: 'To pole jest wymagane!',
   valdiateNumber: 'Używasz nieprawidłowych znaków! Tylko liczby!',
 

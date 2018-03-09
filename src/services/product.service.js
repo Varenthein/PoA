@@ -29,6 +29,19 @@ export const productService = {
       return api.get('/product/id/'+id)
   },
 
+  /********** GET ALL PRODUCTS ************/
+
+  getAll: (id) => {
+      return api.get('/product/all')
+  },
+
+  /********** GET ALL PRODUCTS -> short info ************/
+
+  getAllShort: (id) => {
+      return api.get('/product/all/short')
+  },
+
+
   /********** REMOVE PRODUCT ************/
 
   removeProduct: (id) => {
