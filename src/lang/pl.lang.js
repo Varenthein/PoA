@@ -198,6 +198,8 @@ export const polish = {
   removePromotionConfirmation: 'Czy na pewno chcesz usunąć tę promocję?',
   pickDateAndTime: 'Wybierz datę i czas',
   discountData: 'Zniżki',
+  editPromotion: 'Edytuj promocję',
+  promotionNotExists: 'Promocja o danym id nie istnieje!',
 
   /* MEDIA EXPLORER */
   choosePhoto: 'Wybierz zdjęcie',

@@ -34,6 +34,7 @@ import UserGroupsEdit from '@/components/pages/UserGroups/UserGroupsEdit'
 /* PROMOTIONS */
 import Promotions from '@/components/pages/Promotions/Promotions'
 import PromotionsAdd from '@/components/pages/Promotions/PromotionsAdd'
+import PromotionsEdit from '@/components/pages/Promotions/PromotionsEdit'
 
 
 Vue.use(Router)
@@ -129,6 +130,11 @@ export default new Router({
       path: '/promotions/add',
       name: 'PromotionsAdd',
       component: PromotionsAdd
+    },
+    {
+      path: '/promotions/edit/:id',
+      name: 'PromotionsEdit',
+      component: PromotionsEdit
     },
     {
       path: '/opinions',
