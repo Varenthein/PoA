@@ -48,6 +48,8 @@ export const polish = {
   productDeleted: 'Produkt został usunięty!',
   couldntLoadPerms: 'Nie udało się załadować lsity uprawnień...',
   couldntLoadPromotions: 'Nie udało się załadować promocji',
+  couldntLoadNewsletters: 'Nie udało się załadować newsletterów',
+  couldntLoadClients: 'Nie udało się załadować klientów',
 
   /* PROPS */
   date_recieved: 'Data otrzymania',
@@ -84,6 +86,11 @@ export const polish = {
   all: 'Wszystkie',
   percent_less: 'Zniżka procentowa',
   amount_less: 'Zniżka kwotowa',
+  date_sent: 'Data wysłania',
+  title: 'Tytuł',
+  content: 'Treść',
+  sendTo: 'Wyślij do',
+  sendNewsletter: 'Wyślij',
 
 
   /* OPERATIONS */
@@ -101,6 +108,7 @@ export const polish = {
   editProduct: 'Edytuj produkt',
   show: 'Pokaż',
   print: 'Drukuj',
+  back: 'Wróć',
 
   /* VALIDATION */
   validateNameIsRequired: 'Proszę podać nazwę',

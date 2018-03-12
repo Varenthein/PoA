@@ -36,6 +36,9 @@ import Promotions from '@/components/pages/Promotions/Promotions'
 import PromotionsAdd from '@/components/pages/Promotions/PromotionsAdd'
 import PromotionsEdit from '@/components/pages/Promotions/PromotionsEdit'
 
+/* NEWSLETTER */
+import Newsletters from '@/components/pages/Newsletter/Newsletters'
+import NewsletterAdd from '@/components/pages/Newsletter/NewsletterAdd'
 
 Vue.use(Router)
 
@@ -135,6 +138,16 @@ export default new Router({
       path: '/promotions/edit/:id',
       name: 'PromotionsEdit',
       component: PromotionsEdit
+    },
+    {
+      path: '/newsletter',
+      name: 'Newsletters',
+      component: Newsletters
+    },
+    {
+      path: '/newsletter/send',
+      name: 'NewsletterAdd',
+      component: NewsletterAdd
     },
     {
       path: '/opinions',

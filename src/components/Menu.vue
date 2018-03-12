@@ -81,7 +81,7 @@ export default {
               { title: this.translate('addPromotion'), perm: 'addPromotion', pathTo: '/promotions/add', subMenu: false }
             ]},
             { title: this.translate('opinions'), pathTo: '/opinions', perm: 'seeOpinion', subMenu: false},
-            { title: this.translate('newsletter'), pathTo: 'Newsletter', subMenu: false },
+            { title: this.translate('newsletter'), perm: 'seeNewsletter', pathTo: '/newsletter', subMenu: false },
             { title: this.translate('others'), pathTo: 'others', subMenu: [
                     { title: this.translate('stats'), pathTo: 'stats', subMenu: false}
             ]}
