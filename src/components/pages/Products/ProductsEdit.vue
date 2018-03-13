@@ -24,6 +24,10 @@
           <el-input v-model="product.name"></el-input>
         </el-form-item>
 
+        <el-form-item :rules="[{ required: true, message: this.translate('validateItsRequired'), trigger: 'blur' }, { type: 'number', message: this.translate('validateNumber')}, { validator: amountValidator, trigger: 'blur' }]" :label="translate('in_stock')" prop="in_stock">
+          <el-input type="number" v-model.number="product.in_stock"></el-input>
+        </el-form-item>
+
         <el-form-item required :label="translate('personalized')" prop="type">
           <el-switch v-model="product.type"></el-switch>
         </el-form-item>
@@ -202,13 +206,23 @@ export default {
         type: true,
         options: [],
         requirements: [],
-        personalization: ''
+        personalization: '',
+        in_stock: 0
       },
-      rules: [],
       editorOptions: ''
     }
   },
   methods: {
+
+    /*********************** AMOUNT VALIDATOR *********************/
+
+    amountValidator(rule, value, callback) {
+      if (value < 0) {
+        callback(new Error(this.translate('validateLength',{ min: 0, max: 'brak granicy'})));
+      } else {
+        callback();
+      }
+    },
 
     /***************************** PREAPRE FORM ********************************/
 
@@ -221,18 +235,6 @@ export default {
         })
         else {
           this.categories = response.data
-          this.rules = [{
-                required: true,
-                message: this.translate('validateNameIsRequired'),
-                trigger: 'blur'
-              },
-              {
-                min: 3,
-                max: 100,
-                message: this.translate('validateProdLength'),
-                trigger: 'blur'
-              }
-            ]
 
           this.editorOptions = { placeholder: { text: this.translate('longDescPlaceholder') }, toolbar: {buttons: ['bold', 'italic', 'underline', 'anchor', 'h2', 'h3', 'quote']}}
           this.loading = false
@@ -417,6 +419,7 @@ export default {
               product.photos = JSON.parse(product.photos)
               product.technical_data = JSON.parse(product.technical_data)
               product.requirements = JSON.parse(product.requirements)
+              product.in_stock = parseInt(product.in_stock)
               this.product = product
               this.prepareForm()
             }

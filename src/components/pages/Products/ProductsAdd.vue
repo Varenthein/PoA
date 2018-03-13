@@ -24,6 +24,10 @@
           <el-input v-model="product.name"></el-input>
         </el-form-item>
 
+        <el-form-item :rules="[{ required: true, message: this.translate('validateItsRequired'), trigger: 'blur' }, { type: 'number', message: this.translate('validateNumber')}, { validator: amountValidator, trigger: 'blur' }]" :label="translate('in_stock')" prop="in_stock">
+          <el-input type="number" v-model.number="product.in_stock"></el-input>
+        </el-form-item>
+
         <el-form-item required :label="translate('personalized')" prop="type">
           <el-switch v-model="product.type"></el-switch>
         </el-form-item>
@@ -202,13 +206,24 @@ export default {
         type: true,
         options: [],
         requirements: [],
-        personalization: ''
+        personalization: '',
+        in_stock: 0
       },
       rules: [],
       editorOptions: ''
     }
   },
   methods: {
+
+    /*********************** AMOUNT VALIDATOR *********************/
+
+    amountValidator(rule, value, callback) {
+      if (value < 0) {
+        callback(new Error(this.translate('validateLength',{ min: 0, max: 'brak granicy'})));
+      } else {
+        callback();
+      }
+    },
 
     /***************************** PREAPRE FORM ********************************/
 

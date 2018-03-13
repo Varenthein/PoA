@@ -91,7 +91,7 @@ export const polish = {
   content: 'Treść',
   sendTo: 'Wyślij do',
   sendNewsletter: 'Wyślij',
-
+  in_stock: 'W magazynie',
 
   /* OPERATIONS */
   operations: 'Działania',
