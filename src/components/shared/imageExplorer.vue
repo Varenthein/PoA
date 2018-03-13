@@ -7,7 +7,7 @@
 
       <!-- upload section -->
       <h4 v-lang.addPhoto style=""></h4>
-      <el-upload ref="upload" action="http://localhost:9000/api/image/upload" :on-remove="handleRemove" :on-success="checkSuccess">
+      <el-upload ref="upload" :action="url+'/api/image/upload'" :on-remove="handleRemove" :on-success="checkSuccess">
         <el-button plain type="success" size="small" icon="el-icon-plus">{{ this.translate('browse') }}</el-button>
       </el-upload>
       <div class="line"></div>
@@ -41,7 +41,7 @@
     </el-dialog>
 
     <!-- EXPLORER BUTTON -->
-    <el-button type="success" @click="loadExplorer()" plain size="small" :icon="btnIcon" :style="btnStyle">{{ btnTitle }}</el-button>
+    <el-button v-loading="loading" type="success" @click="loadExplorer()" plain size="small" :icon="btnIcon" :style="btnStyle">{{ btnTitle }}</el-button>
 
   </div>
 
@@ -51,6 +51,7 @@
 
 /* IMPORT SERVICES */
 import { imageService } from '@/services/image.service.js'
+import { optionService } from '@/services/option.service.js'
 
 export default {
   name: 'imageExplorer',
@@ -71,7 +72,9 @@ export default {
       page: 1,
       itemsPerPage: 10,
       images: [],
-      image: {}
+      image: {},
+      loading: true,
+      url: '',
     }
   },
   watch: {
@@ -202,6 +205,20 @@ export default {
 
   },
   created: function () {
+
+    //get url from db
+    optionService.getByName('url').then(response => {
+
+      const resp = response.data
+      if(resp.type && resp.type == "error") this.$notify({title: this.translate('error'), message: resp.msg, type: 'error'})
+      else if(resp.type && resp.type == "success") {
+         this.url = JSON.parse(JSON.stringify(resp.msg)).value
+         this.imagesPath = this.url + 'content/img/uploads/'
+         this.loading = false
+       } else throw 'err'
+    }).catch(err => {
+        this.$notify({title: this.translate('error'), message: this.translate('couldntLoadOptions')+err, type: 'warning'})
+    })
 
     //prepare button
     this.prepareBtn()

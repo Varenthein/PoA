@@ -43,6 +43,9 @@ import NewsletterAdd from '@/components/pages/Newsletter/NewsletterAdd'
 /* SETTINGS */
 import Settings from '@/components/pages/Settings/Settings'
 
+/* STATS */
+import Stats from '@/components/pages/Stats/Stats'
+
 Vue.use(Router)
 
 export default new Router({
@@ -161,6 +164,11 @@ export default new Router({
       path: '/settings',
       name: 'Settings',
       component: Settings
+    },
+    {
+      path: '/stats',
+      name: 'Stats',
+      component: Stats
     }
   ]
 })

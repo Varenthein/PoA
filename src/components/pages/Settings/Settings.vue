@@ -82,6 +82,7 @@ export default {
          } else throw 'err'
       }).catch(err => {
           this.$notify({title: this.translate('error'), message: this.translate('couldntLoadOptions')+err, type: 'warning'})
+          setTimeout(() => { window.location = '/settings' }, 3000)
       })
 
     }

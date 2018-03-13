@@ -94,6 +94,7 @@ export const polish = {
   sendTo: 'Wyślij do',
   sendNewsletter: 'Wyślij',
   in_stock: 'W magazynie',
+  selled: 'Sprzedano',
 
   /* OPERATIONS */
   operations: 'Działania',
