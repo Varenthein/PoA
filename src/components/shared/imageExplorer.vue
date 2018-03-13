@@ -7,7 +7,7 @@
 
       <!-- upload section -->
       <h4 v-lang.addPhoto style=""></h4>
-      <el-upload ref="upload" :action="url+'/api/image/upload'" :on-remove="handleRemove" :on-success="checkSuccess">
+      <el-upload ref="upload" :action="url+'api/image/upload'" :on-remove="handleRemove" :on-success="checkSuccess">
         <el-button plain type="success" size="small" icon="el-icon-plus">{{ this.translate('browse') }}</el-button>
       </el-upload>
       <div class="line"></div>
