@@ -12,6 +12,18 @@ export const optionService = {
 
   getByName: (name) => {
     return api.get('/option/name/'+name)
-  }
+  },
+
+  /************************** GET ALL ************************/
+
+  getAll: (id) => {
+    return api.get('/option/all')
+  },
+
+  /************************* SET OPTION *************************/
+
+  setOption: (id, option) => {
+    return api.post('/option/edit/'+id, option)
+  },
 
 }

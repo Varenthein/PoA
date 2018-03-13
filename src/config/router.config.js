@@ -40,6 +40,9 @@ import PromotionsEdit from '@/components/pages/Promotions/PromotionsEdit'
 import Newsletters from '@/components/pages/Newsletter/Newsletters'
 import NewsletterAdd from '@/components/pages/Newsletter/NewsletterAdd'
 
+/* SETTINGS */
+import Settings from '@/components/pages/Settings/Settings'
+
 Vue.use(Router)
 
 export default new Router({
@@ -153,6 +156,11 @@ export default new Router({
       path: '/opinions',
       name: 'Opinions',
       component: Opinions
+    },
+    {
+      path: '/settings',
+      name: 'Settings',
+      component: Settings
     }
   ]
 })

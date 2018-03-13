@@ -31,6 +31,7 @@ export const polish = {
   sentNewsletter: 'Wysłane listy',
   addNewsletter: 'Wyślij nowy',
   others: 'Inne',
+  settings: 'Ustawienia',
 
   /* NOTIFICATIONS */
   success: 'Sukces!',
@@ -50,6 +51,7 @@ export const polish = {
   couldntLoadPromotions: 'Nie udało się załadować promocji',
   couldntLoadNewsletters: 'Nie udało się załadować newsletterów',
   couldntLoadClients: 'Nie udało się załadować klientów',
+  couldntLoadOptions: 'Nie udało się załadować opcji',
 
   /* PROPS */
   date_recieved: 'Data otrzymania',
