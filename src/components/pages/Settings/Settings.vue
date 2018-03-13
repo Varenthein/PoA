@@ -52,14 +52,6 @@ export default {
 
     /***************************** UPDATE DESC *******************************/
 
-    updateDesc(operation) {
-      console.log(operation, this.editable);
-      //console.log(this.options[this.options.indexOf(opt)].value, operation.api.origElements.innerHTML)
-      //this.options[this.options.indexOf(opt)].value = operation.api.origElements.innerHTML
-    },
-
-    /***************************** UPDATE DESC *******************************/
-
     editOption(opt) {
 
       optionService.setOption(opt.id,opt).then(response => {
